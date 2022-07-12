@@ -1,0 +1,53 @@
+#!/rescue/sh
+
+set -e
+
+PATH="/rescue"
+
+if [ "`ps -o command 1 | tail -n 1 | ( read c o; echo ${o} )`" = "-s" ]; then
+  echo "==> Running in single-user mode"
+  SINGLE_USER="true"
+fi
+
+echo "==> Remount rootfs as read-write"
+mount -u -w /
+
+makedir=${makedir:-"/cdrom"}
+
+echo "==> Make mountpoints /cdrom"
+mkdir -p ${makedir}
+
+echo "Waiting for FreeBSD media to initialize"
+while : ; do
+    [ -e "/dev/iso9660/FREEBSD" ] && echo "found /dev/iso9660/FREEBSD" && sleep 2 && break
+    sleep 2
+done
+
+echo "==> Mount cdrom"
+mount_cd9660 /dev/iso9660/@VOLUME@ /cdrom
+
+if [ "$SINGLE_USER" = "true" ]; then
+        echo "Starting interactive shell in temporary rootfs ..."
+        exit 0
+fi
+
+# Ensure the system has more than enough memory for memdisk
+x=3221225472
+y=$(sysctl -n hw.physmem)
+echo "Required memory ${x} for memdisk"
+echo "Detected memory ${y} for memdisk"
+if [ $x -gt $y ] ; then
+  echo "FreeBSD requires 4GB of memory for memdisk, and operation!"
+  echo "Type exit, and press enter after entering the rescue shell to power off."
+  exit 1
+fi
+
+echo "==> Mount swap-based memdisk"
+mdconfig -a -t swap -s 3g -u 1 >/dev/null 2>/dev/null
+zpool create livecd /dev/md1 >/dev/null 2>/dev/null
+zfs set compression=gzip livecd
+zfs set primarycache=none livecd
+echo "==> Replicate system image to swap-based memdisk"
+dd if=/cdrom/data/system.img status=progress bs=1M | zfs recv -F livecd
+kenv init_shell="/rescue/sh"
+exit 0
