@@ -88,7 +88,7 @@ build(){
     echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/usr/home/freebsd/.xinitrc
     chmod 777 ${release}/usr/home/freebsd/.xinitrc
     echo "RandomPlacement" > ${release}/usr/home/freebsd/.twmrc
-    echo "BorderWidth=0" >> ${release}/usr/home/freebsd/.twmrc
+    echo "BorderWidth 0" >> ${release}/usr/home/freebsd/.twmrc
     echo "NoTitle" >> ${release}/usr/home/freebsd/.twmrc
     echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
     chmod 777 ${release}/usr/home/freebsd/.xinitrc
