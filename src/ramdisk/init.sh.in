@@ -32,7 +32,7 @@ if [ "$SINGLE_USER" = "true" ]; then
 fi
 
 # Ensure the system has more than enough memory for memdisk
-x=3221225472
+x=3163787264
 y=$(sysctl -n hw.physmem)
 echo "Required memory ${x} for memdisk"
 echo "Detected memory ${y} for memdisk"
@@ -43,7 +43,7 @@ if [ $x -gt $y ] ; then
 fi
 
 echo "==> Mount swap-based memdisk"
-mdconfig -a -t swap -s 3g -u 1 >/dev/null 2>/dev/null
+mdconfig -a -t swap -s $(sysctl -n hw.physmem)b -u 1 >/dev/null 2>/dev/null
 zpool create livecd /dev/md1 >/dev/null 2>/dev/null
 zfs set compression=gzip livecd
 zfs set primarycache=none livecd
