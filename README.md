@@ -14,7 +14,7 @@ Screenshots of the pre-built ISO can be seen in the animated GIF below:
 
 # Build Steps
 
-1) Clone the repository on a FreeBSD 13.1-RELEASE installation, (download FreeBSD from https://www.freebsd.org/):
+1) Clone the repository on a FreeBSD 13.1-RELEASE installation, (download FreeBSD from [FreeBSD.org](https://www.freebsd.org/)):
 
 ```
 git clone https://github.com/time-killer-games/freebsd-arcade-builder ~/freebsd-arcade-builder
