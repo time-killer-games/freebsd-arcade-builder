@@ -47,4 +47,4 @@ sudo rm -fr /usr/local/freebsd-build
 
 The screen resolution of the operating system is rendered at `640x480` pixels. 
 
-Edit the `build.sh` and `loader.conf` to change it to a new screen resolution.
+Edit `build.sh` and `loader.conf` to change this to a new screen resolution.
