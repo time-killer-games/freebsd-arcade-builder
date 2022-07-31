@@ -16,7 +16,7 @@ Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 git clone https://github.com/time-killer-games/freebsd-arcade-builder ~/freebsd-arcade-builder
 ```
 
-2) Overwrite "~/freebsd-arcade-builder-wine/src/wine/executable/run.exe" with a valid fullscreen Windows executable. The executable's main window must have no border or title bar and should fill the primary monitor's resolution. For Visual C++ developers, a Windows API example which will work with default Window Manager, (twm), can be seen below: 
+2) Overwrite "~/freebsd-arcade-builder/src/wine/executable/run.exe" with a valid fullscreen Windows executable. The executable's main window must have no border or title bar and should fill the primary monitor's resolution. For Visual C++ developers, a Windows API example which will work with default Window Manager, (twm), can be seen below: 
 
 ```
 int w = GetSystemMetrics(SM_CXSCREEN);
