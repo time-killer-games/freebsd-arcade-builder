@@ -4,6 +4,10 @@ Make Custom Arcade Cabinet ISO Images from Windows Games
 
 Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 
+[Download pre-built ISO](https://drive.google.com/file/d/1_1VsTivbweAxFLDHbaGT7RBxYTCSDrBY/view?usp=sharing), (write to USB stick or SD card with [balenaEtcher](https://www.balena.io/etcher/)).
+
+Screenshots of the pre-built ISO can be seen in the animated GIF below:
+
 ![slideshow.gif](https://github.com/time-killer-games/freebsd-arcade-builder/raw/main/slideshow.gif "slideshow")
 
 ---------------------------------------------------------------------
