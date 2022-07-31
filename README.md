@@ -1,6 +1,6 @@
 # FreeBSD Arcade Builder
 
-Make Custom Arcade Cabinet ISO Images from Microsoft Windows Games
+Make Custom Arcade Cabinet ISO's from Microsoft Windows Games.
 
 Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 
