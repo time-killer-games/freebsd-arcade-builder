@@ -45,6 +45,6 @@ sudo ~/freebsd-arcade-builder-wine/build.sh
 sudo rm -fr /usr/local/freebsd-build
 ```
 
-The screen resolution of the OS is rendered at `640x480` pixels. 
+The screen resolution of the operating system is rendered at `640x480` pixels. 
 
-Edit the `build.sh` and `loader.conf` to change screen resolution.
+Edit the `build.sh` and `loader.conf` to change it to a new screen resolution.
