@@ -51,9 +51,11 @@ build(){
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.1-RELEASE/base.txz
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.1-RELEASE/kernel.txz
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.1-RELEASE/lib32.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.1-RELEASE/src.txz
     tar -zxvf base.txz -C ${release}
     tar -zxvf kernel.txz -C ${release}
     tar -zxvf lib32.txz -C ${release}
+    tar -zxvf src.txz -C ${release}
 
     # Add base items
     touch ${release}/etc/fstab
@@ -79,6 +81,13 @@ build(){
     chroot ${release} pw mod user "freebsd" -w none
     chroot ${release} chsh -s /bin/csh "freebsd"
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
+    echo "include GENERIC" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "ident KERNEL" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "options C_NORM_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "options SC_NORM_REV_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "options SC_KERNEL_CONS_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "options SC_KERNEL_CONS_REV_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    chroot ${release} su -l root -c "cd /usr/src && make buildkernel KERNCONF=KERNEL && make installkernel KERNCONF=KERNEL"
     chroot ${release} mount -t procfs proc /proc
     chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
     chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
