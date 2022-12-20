@@ -81,7 +81,7 @@ build(){
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     chroot ${release} mount -t procfs proc /proc
     chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
-    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound"
+    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
     mkdir -p ${release}/usr/local/etc/rc.d
     mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
     echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
