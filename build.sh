@@ -81,7 +81,7 @@ build(){
     chroot ${release} pw mod user "freebsd" -w none
     chroot ${release} chsh -s /bin/csh "freebsd"
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
-    echo "include GENERIC" >> ${release}/usr/src/sys/amd64/conf/KERNEL
+    echo "include GENERIC" > ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "ident KERNEL" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "options SC_KERNEL_CONS_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "options SC_KERNEL_CONS_REV_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
