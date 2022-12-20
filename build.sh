@@ -83,11 +83,10 @@ build(){
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     echo "include GENERIC" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "ident KERNEL" >> ${release}/usr/src/sys/amd64/conf/KERNEL
-    echo "options C_NORM_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
-    echo "options SC_NORM_REV_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "options SC_KERNEL_CONS_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     echo "options SC_KERNEL_CONS_REV_ATTR=(FG_BLACK|BG_BLACK)" >> ${release}/usr/src/sys/amd64/conf/KERNEL
     chroot ${release} su -l root -c "cd /usr/src && make buildkernel KERNCONF=KERNEL && make installkernel KERNCONF=KERNEL"
+    chroot ${release} su -l root -c "rm -fR /usr/src/*"
     chroot ${release} mount -t procfs proc /proc
     chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
     chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
