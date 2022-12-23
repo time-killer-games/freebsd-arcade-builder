@@ -4,7 +4,7 @@ Make Custom Arcade Cabinet ISO's from Microsoft Windows Games.
 
 Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 
-[Download pre-built ISO](https://drive.google.com/file/d/1_1VsTivbweAxFLDHbaGT7RBxYTCSDrBY/view?usp=sharing), (write to USB stick or SD card with [balenaEtcher](https://www.balena.io/etcher/)).
+[Download pre-built ISO](https://drive.google.com/drive/folders/1Wy4dKiv4iAsebTv_V8W-aqdpFZwAZQ84?usp=share_link), (write to USB stick or SD card with [balenaEtcher](https://www.balena.io/etcher/)).
 
 Screenshots of the pre-built ISO can be seen in the animated GIF below:
 
