@@ -34,7 +34,7 @@ SetWindowPos(hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
 3) Run the following to build yourself a bootable FreeBSD ISO image:
 
 ```
-sudo ~/freebsd-arcade-builder-wine/build.sh
+sudo ~/freebsd-arcade-builder/build.sh
 ```
 
 4) The output iso file will be located at "/usr/local/freebsd-build/iso/freebsd.iso". Get it out of there.
