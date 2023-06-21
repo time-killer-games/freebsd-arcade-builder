@@ -25,4 +25,3 @@ else
         fi;
     fi;
 fi;
-/usr/bin/login freebsd

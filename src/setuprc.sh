@@ -7,4 +7,5 @@ setuprc(){
     chroot ${release} sysrc dumpdev="NO"
     chroot ${release} sysrc background_dhclient="YES"
     chroot ${release} sysrc rc_startmsgs="NO"
+    chroot ${release} sysrc lightdm_enable="YES"
 }

@@ -47,7 +47,6 @@ build(){
     
     # Add and extract base/kernel into ${release}
     cd ${base}
-    # TODO: Switch with CoreNGS release
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/base.txz
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/kernel.txz
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/lib32.txz
@@ -66,7 +65,6 @@ build(){
     mount -t devfs devfs ${release}/dev
     cat ${pkgdir}/${tag}.${desktop}.${platform} | xargs pkg -c ${release} install -y
     chroot ${release} pkg install -y pkg
-    chroot ${release} pkg install -y winetricks
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
@@ -78,124 +76,30 @@ build(){
     chroot ${release} chsh -s /bin/csh "root"
     chroot ${release} pw mod user "freebsd" -w none
     chroot ${release} chsh -s /bin/csh "freebsd"
+    echo "fdesc /dev/fd fdescfs rw 0 0" >> ${release}/etc/fstab
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
-    chroot ${release} mount -t procfs proc /proc
-    chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
-    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
-    mkdir -p ${release}/usr/local/etc/rc.d
-    mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
-    echo "RandomPlacement" > ${release}/usr/home/freebsd/.twmrc
-    echo "BorderWidth 0" >> ${release}/usr/home/freebsd/.twmrc
-    echo "NoTitle" >> ${release}/usr/home/freebsd/.twmrc
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
-    cp -f "${srcdir}/login.sh" ${release}/usr/local/etc/rc.d/login.sh
-    chmod 777 ${release}/usr/local/etc/rc.d/login.sh
+    cp -f "${srcdir}/prelogin.sh" ${release}/usr/local/etc/rc.d/prelogin.sh
+    chmod 755 ${release}/usr/local/etc/rc.d/prelogin.sh
+    sed -i '' "s@#greeter-session=example-gtk-gnome@greeter-session=slick-greeter@" ${release}/usr/local/etc/lightdm/lightdm.conf
+    sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
+    echo "exec ck-launch-session startxfce4" > ${release}/usr/home/freebsd/.xinitrc
+    chmod 755 ${release}/usr/home/freebsd/.xinitrc
+    echo "exec ck-launch-session startxfce4" > ${release}/root/.xinitrc
+    chmod 755 ${release}/root/.xinitrc
+    echo "startx" > ${release}/usr/home/freebsd/.login
+    chmod 755 ${release}/usr/home/freebsd/.login
+    chroot ${release} xdg-user-dirs-update
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
-    echo "setenv WINEDLLOVERRIDES \"mscoree,mshtml=\"" >> ${release}/usr/home/freebsd/.login
-    echo "startx -- -nocursor" >> ${release}/usr/home/freebsd/.login
-    chmod 777 ${release}/usr/home/freebsd/.login
-    echo "twm -display :0 &" > ${release}/usr/home/freebsd/start.sh
-    echo "sleep 5" >> ${release}/usr/home/freebsd/start.sh
-    echo "wine /usr/home/freebsd/executable/run.exe" >> ${release}/usr/home/freebsd/start.sh
-    echo "/sbin/shutdown -p now" >> ${release}/usr/home/freebsd/start.sh
-    chmod 777 ${release}/usr/home/freebsd/start.sh
-    echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Driver \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "Section \"InputClass\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Identifier \"kbdmux\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  MatchDevicePath \"/dev/kbdmux*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Driver \"kbd\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Driver  \"scfb\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "Section \"Monitor\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Identifier \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "Section \"Screen\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Identifier \"Screen0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Monitor \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  Device \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  DefaultDepth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  SubSection \"Display\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "    Depth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Driver \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "Section \"InputClass\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Identifier \"kbdmux\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  MatchDevicePath \"/dev/kbdmux*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Driver \"kbd\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Driver  \"vesa\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "Section \"Monitor\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Identifier \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "Section \"Screen\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Identifier \"Screen0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Monitor \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  Device \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  DefaultDepth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  SubSection \"Display\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "    Depth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    cp -fR "${srcdir}/wine/executable" ${release}/usr/home/freebsd/
 
-    # remove all packages that are not permissive; cannot use "pkg remove" because it will also remove permissive packages we need
-    chroot ${release} pkg remove -y winetricks && chroot ${release} pkg autoremove -y && chroot ${release} pkg clean -y
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq binutils | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq ca_root_nss | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq desktop-file-utils | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gcc* | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gettext-runtime | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gnutls | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq jbigkit | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libiconv | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libidn2 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq liblz4 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libtasn1 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libunistring | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq nettle | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq readline | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq tpm-emulator | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq webcamd | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq binutils | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq ca_root_nss | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq desktop-file-utils | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gcc* | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gettext-runtime | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gnutls | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq jbigkit | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libiconv | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libidn2 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq liblz4 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libtasn1 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libunistring | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq nettle | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq readline | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq tpm-emulator | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq webcamd | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    umount -f ${release}/proc
-    
     # Add software overlays 
     mkdir -pv ${release}/usr/local/general ${release}/usr/local/freebsd
 
