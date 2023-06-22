@@ -86,8 +86,12 @@ build(){
     chmod 755 ${release}/usr/home/freebsd/.xinitrc
     echo "exec ck-launch-session startxfce4" > ${release}/root/.xinitrc
     chmod 755 ${release}/root/.xinitrc
-    echo "startx" > ${release}/usr/home/freebsd/.login
+    echo "startx &" > ${release}/usr/home/freebsd/.login
+    echo "xwallpaper --zoom /root/Pictures/Wallpapers/courtyard_part_1.png" >> ${release}/usr/home/freebsd/.login
     chmod 755 ${release}/usr/home/freebsd/.login
+    echo "startx &" > ${release}/root/.login
+    echo "xwallpaper --zoom /root/Pictures/Wallpapers/courtyard_part_1.png" >> ${release}/root/.login
+    chmod 755 ${release}/root/.login
     chroot ${release} xdg-user-dirs-update
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
