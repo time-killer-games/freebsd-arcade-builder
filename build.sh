@@ -80,16 +80,14 @@ build(){
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     cp -f "${srcdir}/prelogin.sh" ${release}/usr/local/etc/rc.d/prelogin.sh
     chmod 755 ${release}/usr/local/etc/rc.d/prelogin.sh
+    chroot ${release} xdg-user-dirs-update
     sed -i '' "s@#greeter-session=example-gtk-gnome@greeter-session=slick-greeter@" ${release}/usr/local/etc/lightdm/lightdm.conf
     sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
     echo "exec ck-launch-session startxfce4" > ${release}/usr/home/freebsd/.xinitrc
     chmod 755 ${release}/usr/home/freebsd/.xinitrc
-    echo "exec ck-launch-session startxfce4 &" > ${release}/root/.xinitrc
-    echo "sleep 5 && /usr/home/freebsd/.setwallpaper.sh" >> ${release}/root/.xinitrc
-    chmod 755 ${release}/root/.xinitrc
     echo "startx &" > ${release}/usr/home/freebsd/.login
+    echo "sleep 5 && /usr/home/freebsd/.setwallpaper.sh" >> ${release}/usr/home/freebsd/.login
     chmod 755 ${release}/usr/home/freebsd/.login
-    chroot ${release} xdg-user-dirs-update
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -100,16 +98,15 @@ build(){
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Driver  \"vesa\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    cp -fR "${srcdir}/Wallpapers" ${release}/usr/home/freebsd/Pictures/
-    cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
+    cp -fR "${srcdir}/Wallpapers" ${release}/usr/home/freebsd/Pictures/Wallpapers
+    cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/Wallpapers
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
     cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
-    cp -fR "${srcdir}/.setwallpaper.sh" ${release}/root/.setwallpaper.sh
-    chmod 755 ${release}/root/.setwallpaper.sh
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/root/.config/
+    chroot ${release} xdg-user-dirs-update
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
