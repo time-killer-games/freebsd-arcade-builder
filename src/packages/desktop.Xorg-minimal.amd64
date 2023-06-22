@@ -5,10 +5,11 @@ lightdm-gtk-greeter
 xfce
 xfce4-goodies
 xfce4-pulseaudio-plugin
+papirus-icon-theme
 xdg-user-dirs
 networkmgr
 firefox-esr
 thunderbird
 octopkg
 neofetch
-cpdup
+git
