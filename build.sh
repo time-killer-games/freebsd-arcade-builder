@@ -101,8 +101,10 @@ build(){
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     cp -fR "${srcdir}/Wallpapers" ${release}/usr/home/freebsd/Pictures/
     cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
-    cp -fR "${srcdir}/.config" ${release}/usr/home/freebsd/.config
-    cp -fR "${srcdir}/.config" ${release}/root/.config
+    mkdir -p ${release}/usr/home/freebsd/.config
+    mkdir -p ${release}/root/.config
+    cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
+    cp -fR "${srcdir}/.config/xfce4" ${release}/root/.config/
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
