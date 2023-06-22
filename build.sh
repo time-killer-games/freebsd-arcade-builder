@@ -98,8 +98,8 @@ build(){
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Driver  \"vesa\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    cp -fR "${srcdir}/Wallpapers" ${release}/usr/home/freebsd/Pictures/Wallpapers
-    cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/Wallpapers
+    cp -fR "${srcdir}/Wallpapers" ${release}/usr/home/freebsd/Pictures/
+    cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
     cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
