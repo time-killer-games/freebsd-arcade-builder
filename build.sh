@@ -87,8 +87,6 @@ build(){
     chmod 755 ${release}/usr/home/freebsd/.xinitrc
     echo "startx" > ${release}/usr/home/freebsd/.login
     chmod 755 ${release}/usr/home/freebsd/.login
-    echo "/usr/home/freebsd/.setwallpaper.sh" >> ${release}/usr/home/freebsd/.cshrc
-    chmod 755 ${release}/usr/home/freebsd/.cshrc
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -105,7 +103,7 @@ build(){
     mkdir -p ${release}/root/.config
     cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
-    cp -fR "${srcdir}/.config/user-dirs.dirs" ${release}/usr/home/freebsd/.config/
+    cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y

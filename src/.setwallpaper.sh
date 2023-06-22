@@ -9,3 +9,5 @@ for i in $(xfconf-query -c xfce4-desktop -p /backdrop -l|egrep -e "screen.*/moni
     xfconf-query -c xfce4-desktop -p $i -n -t string -s /root/Pictures/Wallpapers/courtyard_part_1.jpg
     xfconf-query -c xfce4-desktop -p $i -s /root/Pictures/Wallpapers/courtyard_part_1.jpg
 done
+
+xdg-user-dirs-update
