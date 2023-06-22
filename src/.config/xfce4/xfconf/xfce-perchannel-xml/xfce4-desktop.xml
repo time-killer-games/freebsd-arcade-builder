@@ -12,17 +12,17 @@
         <property name="workspace1" type="empty">
           <property name="color-style" type="int" value="0"/>
           <property name="image-style" type="int" value="5"/>
-          <property name="last-image" type="string" value="/usr/local/share/backgrounds/xfce/xfce-shapes.svg"/>
+          <property name="last-image" type="string" value="/root/Pictures/Wallpapers/courtyard_part_1.png"/>
         </property>
         <property name="workspace2" type="empty">
           <property name="color-style" type="int" value="0"/>
           <property name="image-style" type="int" value="5"/>
-          <property name="last-image" type="string" value="/usr/local/share/backgrounds/xfce/xfce-shapes.svg"/>
+          <property name="last-image" type="string" value="/root/Pictures/Wallpapers/courtyard_part_1.png"/>
         </property>
         <property name="workspace3" type="empty">
           <property name="color-style" type="int" value="0"/>
           <property name="image-style" type="int" value="5"/>
-          <property name="last-image" type="string" value="/usr/local/share/backgrounds/xfce/xfce-shapes.svg"/>
+          <property name="last-image" type="string" value="/root/Pictures/Wallpapers/courtyard_part_1.png"/>
         </property>
       </property>
       <property name="monitor0" type="empty">
