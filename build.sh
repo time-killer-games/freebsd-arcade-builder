@@ -105,9 +105,8 @@ build(){
     mkdir -p ${release}/root/.config
     cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
+    cp -fR "${srcdir}/.config/user-dirs.dirs" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
-    cp -fR "${srcdir}/.config/xfce4" ${release}/root/.config/
-    chroot ${release} xdg-user-dirs-update
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
