@@ -85,9 +85,10 @@ build(){
     sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
     echo "exec ck-launch-session startxfce4" > ${release}/usr/home/freebsd/.xinitrc
     chmod 755 ${release}/usr/home/freebsd/.xinitrc
-    echo "startx &" > ${release}/usr/home/freebsd/.login
-    echo "sleep 5 && /usr/home/freebsd/.setwallpaper.sh" >> ${release}/usr/home/freebsd/.login
+    echo "startx" > ${release}/usr/home/freebsd/.login
     chmod 755 ${release}/usr/home/freebsd/.login
+    echo "/usr/home/freebsd/.setwallpaper.sh" >> ${release}/usr/home/freebsd/.cshrc
+    chmod 755 ${release}/usr/home/freebsd/.cshrc
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
