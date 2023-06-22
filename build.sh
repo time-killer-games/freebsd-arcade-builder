@@ -105,6 +105,7 @@ build(){
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
     cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
+    chown -R freebsd ${release}/usr/home/freebsd/.config
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
