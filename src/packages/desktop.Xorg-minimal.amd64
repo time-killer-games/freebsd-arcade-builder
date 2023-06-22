@@ -1,6 +1,5 @@
 xf86-video-scfb
 xorg-minimal
-xwallpaper
 lightdm
 lightdm-gtk-greeter
 xfce
@@ -13,4 +12,5 @@ firefox-esr
 thunderbird
 octopkg
 neofetch
+xrandr
 git

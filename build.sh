@@ -84,14 +84,11 @@ build(){
     sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
     echo "exec ck-launch-session startxfce4" > ${release}/usr/home/freebsd/.xinitrc
     chmod 755 ${release}/usr/home/freebsd/.xinitrc
-    echo "exec ck-launch-session startxfce4" > ${release}/root/.xinitrc
+    echo "exec ck-launch-session startxfce4 &" > ${release}/root/.xinitrc
+    echo "sleep 5 && /usr/home/freebsd/.setwallpaper.sh" >> ${release}/root/.xinitrc
     chmod 755 ${release}/root/.xinitrc
     echo "startx &" > ${release}/usr/home/freebsd/.login
-    echo "xwallpaper --zoom /root/Pictures/Wallpapers/courtyard_part_1.png" >> ${release}/usr/home/freebsd/.login
     chmod 755 ${release}/usr/home/freebsd/.login
-    echo "startx &" > ${release}/root/.login
-    echo "xwallpaper --zoom /root/Pictures/Wallpapers/courtyard_part_1.png" >> ${release}/root/.login
-    chmod 755 ${release}/root/.login
     chroot ${release} xdg-user-dirs-update
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
@@ -107,6 +104,10 @@ build(){
     cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
+    cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
+    chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
+    cp -fR "${srcdir}/.setwallpaper.sh" ${release}/root/.setwallpaper.sh
+    chmod 755 ${release}/root/.setwallpaper.sh
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/root/.config/
     chroot ${release} pkg autoremove -y
