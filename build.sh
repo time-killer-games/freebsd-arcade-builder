@@ -104,13 +104,59 @@ build(){
     echo "wine /usr/home/freebsd/executable/run.exe" >> ${release}/usr/home/freebsd/start.sh
     echo "/sbin/shutdown -p now" >> ${release}/usr/home/freebsd/start.sh
     chmod 777 ${release}/usr/home/freebsd/start.sh
-    echo "Section  \"Device\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Driver \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "Section \"InputClass\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Identifier \"kbdmux\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  MatchDevicePath \"/dev/kbdmux*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Driver \"kbd\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Driver  \"scfb\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
-    echo "Section  \"Device\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "Section \"Monitor\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Identifier \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "Section \"Screen\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Identifier \"Screen0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Monitor \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  Device \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  DefaultDepth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  SubSection \"Display\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "    Depth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
+    echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Driver \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "Section \"InputClass\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Identifier \"kbdmux\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  MatchDevicePath \"/dev/kbdmux*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Driver \"kbd\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Driver  \"vesa\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "Section \"Monitor\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Identifier \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "Section \"Screen\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Identifier \"Screen0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Monitor \"Monitor0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  Device \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  DefaultDepth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  SubSection \"Display\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "    Depth 24" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     cp -fR "${srcdir}/wine/executable" ${release}/usr/home/freebsd/
 
