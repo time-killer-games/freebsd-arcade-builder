@@ -100,6 +100,7 @@ build(){
     cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
+    cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
     cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
     cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
