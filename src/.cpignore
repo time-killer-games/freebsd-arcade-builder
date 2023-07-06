@@ -1,6 +1,4 @@
-/etc/fstab
 /mnt/.cache
-/mnt/.snap
 /mnt/bin
 /mnt/boot
 /mnt/cdrom
@@ -20,7 +18,6 @@
 /mnt/var
 /mnt/.cshrc
 /mnt/.profile
-/mnt/.sujournal
 /mnt/COPYRIGHT
 /mnt/entropy
 /mnt/sys
