@@ -15,4 +15,5 @@ if [ ! -f $HOME/.wallpaperset ]; then
 
   xdg-user-dirs-update
   echo 1 >> $HOME/.wallpaperset
+  bsdinstall
 fi
