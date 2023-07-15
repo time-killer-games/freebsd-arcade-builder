@@ -4,7 +4,7 @@ set -e -u
 
 # Run script as root
 if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root"
+    echo "This script must be run as root..."
     exit 1
 fi
 
