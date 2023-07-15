@@ -1,7 +1,7 @@
 #!/bin/sh
 if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run as root...";
-    exit 1;
+  echo "This script must be run as root...";
+  exit 1;
 fi;
 `zenity --question --text="This installer script will overwrite '/dev/ada0' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite. This process cannot be undone.\n\nWould you like to install this operating system to your virtual disk?"`;
 if [ $? = 0 ]; then
