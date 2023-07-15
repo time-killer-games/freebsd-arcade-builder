@@ -3,7 +3,7 @@ if [ "$(id -u)" != "0" ]; then
     echo "This script must be run as root...";
     exit 1;
 fi;
-`zenity --question --text="Would you like to install this operating system to your virtual disk?"`;
+`zenity --question --text="Would you like to install this operating system to your virtual disk? This script will overwrite '/dev/ada0' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite."`;
 if [ $? = 0 ]; then
   `zenity --info --text="Please be patient while the operating system is writing files to your virtual disk. Do not log out of this user session or shut down the virtual machine until you have been notified the process is complete."`;
   gpart create -s gpt ada0;
