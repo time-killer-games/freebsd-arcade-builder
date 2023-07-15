@@ -17,7 +17,7 @@ if [ $? = 0 ]; then
     gpart add -t freebsd-ufs -s $s ada0;
     newfs -U -L FreeBSD /dev/ada0p2;
     mount /dev/ada0p2 /mnt;
-    cpdup -i0 -x / /mnt
+    cpdup -i0 -x -vvv / /mnt
     umount /mnt
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
@@ -34,7 +34,7 @@ if [ $? = 0 ]; then
       gpart add -t freebsd-ufs -s $s ada0;
       newfs -U -L FreeBSD /dev/ada0p2;
       mount /dev/ada0p2 /mnt;
-      cpdup -i0 -x / /mnt
+      cpdup -i0 -x -vvv / /mnt
       umount /mnt
     fi;
   fi;
