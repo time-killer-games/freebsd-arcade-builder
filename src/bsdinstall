@@ -4,7 +4,7 @@ if [ "$(id -u)" != "0" ]; then
   exit 1;
 fi;
 export ada0=`zenity --title "Input Query" --entry --text="Enter the name of the storage device to write this operating system to:" --entry-text "ada0"`;
-if [ ${ada0} = "" ]; then
+if [ "${ada0}" = "" ]; then
   exit 1;
 fi;
 `zenity --question --text="This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite. This process cannot be undone.\n\nWould you like to install this operating system to your virtual disk?"`;
