@@ -13,7 +13,7 @@ if [ $? = 0 ]; then
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
-    gpart add -i 1 -t freebsd-boot -s 512K;
+    gpart add -i 1 -t freebsd-boot -s 512K ${ada0};
     gpart bootcode -i 1 -b /boot/pmbr -p /boot/gptboot ${ada0}
     export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
     export y=`sysctl -n hw.physmem`;
