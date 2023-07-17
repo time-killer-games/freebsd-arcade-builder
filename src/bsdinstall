@@ -5,7 +5,7 @@ if [ "$(id -u)" != "0" ]; then
 fi;
 export gpartshow=`gpart show`;
 export def0=`echo ${gpartshow} | awk '{print $4}'`
-export ada0=`zenity --title "Input Query" --entry --text="${gpartshow}\n\n------------------------------------------------------------------------------\n\nEnter the name of the storage device to write this operating system to:" --entry-text "${def0}"`;
+export ada0=`zenity --title "Input Query" --entry --text="${gpartshow}\n\n-----------------------------------------------------------------------\n\nEnter the name of the storage device to write this operating system to:" --entry-text "${def0}"`;
 if [ "${ada0}" = "" ]; then
   exit 1;
 fi;
