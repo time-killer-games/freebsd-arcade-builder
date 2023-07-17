@@ -18,7 +18,7 @@ if [ $? = 0 ]; then
     gpart add -i 1 -t freebsd-boot -s 512K ${ada0};
     export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
     export y=`sysctl -n hw.physmem`;
-    export z=`echo | awk BEGIN'{print 40*1024*1024}'`
+    export z=`echo | awk BEGIN'{print 8192*1024*1024}'`
     export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
     gpart add -i 2 -t freebsd-ufs -s $s ${ada0};
     newfs -U -L FreeBSD /dev/${ada0}p2;
