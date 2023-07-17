@@ -20,7 +20,7 @@ if [ $? = 0 ]; then
     export y=`sysctl -n hw.physmem`;
     export z=`echo | awk BEGIN'{print 8192*1024*1024}'`
     export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
-    gpart add -i 2 -t freebsd-ufs -s $s ${ada0};
+    gpart add -i 2 -t freebsd-ufs -s ${s} ${ada0};
     newfs -U -L FreeBSD /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
@@ -46,7 +46,7 @@ if [ $? = 0 ]; then
       export y=`sysctl -n hw.physmem`;
       export z=`echo | awk BEGIN'{print 40*1024*1024}'`
       export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
-      gpart add -i 2 -t freebsd-ufs -s $s ${ada0};
+      gpart add -i 2 -t freebsd-ufs -s ${s} ${ada0};
       newfs -U -L FreeBSD /dev/${ada0}p2;
       mount /dev/${ada0}p2 /mnt;
       cpdup -i0 -x -vvv / /mnt;
