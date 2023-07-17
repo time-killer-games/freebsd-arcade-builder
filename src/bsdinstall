@@ -25,8 +25,8 @@ if [ $? = 0 ]; then
     newfs -U -L FreeBSD /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
-    echo "/dev/${ada0}p2 / ufs rw 1 1" > "/mnt/etc/fstab";
-    echo "/dev/${ada0}p3 none swap sw 0 0" >> "/mnt/etc/fstab";
+    echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
+    echo "/dev/gpt/freebsd-swap none swap sw 0 0" >> "/mnt/etc/fstab";
     echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
     echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
     echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
@@ -50,8 +50,8 @@ if [ $? = 0 ]; then
       newfs -U -L FreeBSD /dev/${ada0}p2;
       mount /dev/${ada0}p2 /mnt;
       cpdup -i0 -x -vvv / /mnt;
-      echo "/dev/${ada0}p2 / ufs rw 1 1" > "/mnt/etc/fstab";
-      echo "/dev/${ada0}p3 none swap sw 0 0" >> "/mnt/etc/fstab";
+      echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
+      echo "/dev/gpt/freebsd-swap none swap sw 0 0" >> "/mnt/etc/fstab";
       echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
       echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
       echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
