@@ -7,6 +7,7 @@ if [ `uname -m` = "arm64" ]; then
         su -l root -c "mv -f /usr/local/etc/X11/xorg.conf.d/xorg-bios.conf /usr/local/etc/X11/xorg.conf.d/xorg-bios.conf.bak";
     fi;
 else
+    gpart recover iso9660/FREEBSD
     if [ `/sbin/sysctl machdep.bootmethod | /usr/bin/awk -F' ' '{print $2}'` = BIOS ]; then
         if [ -r '/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf' ]; then
             su -l root -c "mv -f /usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf /usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf.bak";
