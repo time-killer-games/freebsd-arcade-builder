@@ -9,9 +9,9 @@ export ada0=`zenity --title "Input Query" --entry --text="${gpartshow}\n\n------
 if [ "${ada0}" = "" ]; then
   exit 1;
 fi;
-`zenity --question --text="This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite. This process cannot be undone. Would you like to install this operating system to your hard disk?"`;
+`zenity --question --text="This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
 if [ $? = 0 ]; then
-  `zenity --info --text="Please be patient while the operating system is writing files to your hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete."`;
+  `zenity --info --text="Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete."`;
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
@@ -61,5 +61,5 @@ if [ $? = 0 ]; then
       swapon /dev/${ada0}p3;
     fi;
   fi;
-  `zenity --info --text="The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using your hard disk with persistent storage."`;
+  `zenity --info --text="The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage."`;
 fi;
