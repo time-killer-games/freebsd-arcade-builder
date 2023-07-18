@@ -4,7 +4,7 @@ if [ "$(id -u)" != "0" ]; then
   exit 1;
 fi;
 export gpartshow=`gpart show`;
-export def0=`echo ${gpartshow} | awk '{print $4}'`
+export def0=`echo ${gpartshow} | awk '{printf $4}'`
 export ada0=`zenity --title "Input Query" --entry --text="${gpartshow}\n\n-----------------------------------------------------------------------\n\nEnter the name of the storage device to write this operating system to:" --entry-text "${def0}"`;
 if [ "${ada0}" = "" ]; then
   exit 1;
@@ -17,10 +17,10 @@ if [ $? = 0 ]; then
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
     gpart add -i 1 -l freebsd-boot -t freebsd-boot -b 40 -s 512K ${ada0};
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
-    export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
+    export x=`diskinfo -v ${ada0} | awk 'FNR==3{printf $1}'`;
     export y=`sysctl -n hw.physmem`;
-    export z=`echo | awk BEGIN'{print 512*1024}'`
-    export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print (x/2)-y-z}'`;
+    export z=`echo | awk BEGIN'{printf 512*1024}'`
+    export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{printf x-y-z}'`;
     gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
     gpart add -i 3 -l freebsd-swap -t freebsd-swap -s ${y} ${ada0};
     newfs -U /dev/${ada0}p2;
@@ -37,10 +37,10 @@ if [ $? = 0 ]; then
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
       gpart add -i 1 -l freebsd-boot -t efi -a 4k -s 200M ${ada0};
-      export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
+      export x=`diskinfo -v ${ada0} | awk 'FNR==3{printf $1}'`;
       export y=`sysctl -n hw.physmem`;
-      export z=`echo | awk BEGIN'{print 200*1024*1024}'`
-      export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print (x/2)-y-z}'`;
+      export z=`echo | awk BEGIN'{printf 200*1024*1024}'`
+      export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{printf x-y-z}'`;
       gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
       gpart add -i 3 -l freebsd-swap -t freebsd-swap -s ${y} ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
