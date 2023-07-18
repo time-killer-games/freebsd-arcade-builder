@@ -15,13 +15,13 @@ if [ $? = 0 ]; then
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
-    gpart add -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
+    gpart add =i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
     export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
     export y=`sysctl -n hw.physmem`;
     export z=`echo | awk BEGIN'{print 512*1024}'`
     export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
-    gpart add -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
-    gpart add -l freebsd-swap -t freebsd-swap ${ada0};
+    gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
+    gpart add -i 3 -l freebsd-swap -t freebsd-swap ${ada0};
     newfs -U /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
@@ -36,13 +36,13 @@ if [ $? = 0 ]; then
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
-      gpart add -l freebsd-boot -t efi -s 40M ${ada0};
+      gpart add -i 1 -l freebsd-boot -t efi -s 40M ${ada0};
       export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
       export y=`sysctl -n hw.physmem`;
       export z=`echo | awk BEGIN'{print 40*1024*1024}'`
       export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
-      gpart add -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
-      gpart add -l freebsd-swap -t freebsd-swap ${ada0};
+      gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
+      gpart add -i 3 -l freebsd-swap -t freebsd-swap ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
       mount -t msdosfs /dev/${ada0}p1 /mnt;
       mkdir -p /mnt/EFI/BOOT;
