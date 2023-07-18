@@ -17,8 +17,6 @@ if [ $? = 0 ]; then
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
     gpart add -i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
-    export x=`diskinfo -v ${ada0} | awk 'FNR==3{printf $1}'`;
-    export y=`sysctl -n hw.physmem`;
     gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
     newfs -U /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
@@ -32,8 +30,6 @@ if [ $? = 0 ]; then
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
       gpart add -i 1 -l freebsd-boot -t efi -s 40M ${ada0};
-      export x=`diskinfo -v ${ada0} | awk 'FNR==3{printf $1}'`;
-      export y=`sysctl -n hw.physmem`;
       gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
       mount -t msdosfs /dev/${ada0}p1 /mnt;
