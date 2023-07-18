@@ -21,6 +21,7 @@ if [ $? = 0 ]; then
     export z=`echo | awk BEGIN'{print 512*1024}'`
     export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
     gpart add -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
+    gpart add -l freebsd-swap -t freebsd-swap ${ada0};
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
     newfs -U -L FreeBSD /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
@@ -32,7 +33,6 @@ if [ $? = 0 ]; then
     echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
     echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
     umount /mnt;
-    gpart add -l freebsd-swap -t freebsd-swap ${ada0};
     swapon /dev/${ada0}p3;
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
@@ -42,6 +42,7 @@ if [ $? = 0 ]; then
       export z=`echo | awk BEGIN'{print 40*1024*1024}'`
       export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
       gpart add -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
+      gpart add -l freebsd-swap -t freebsd-swap ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
       mount -t msdosfs /dev/${ada0}p1 /mnt;
       mkdir -p /mnt/EFI/BOOT;
@@ -57,7 +58,6 @@ if [ $? = 0 ]; then
       echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
       echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
       umount /mnt;
-      gpart add -l freebsd-swap -t freebsd-swap ${ada0};
       swapon /dev/${ada0}p3;
     fi;
   fi;
