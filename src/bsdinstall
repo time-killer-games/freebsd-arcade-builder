@@ -20,9 +20,9 @@ if [ $? = 0 ]; then
     export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
     export y=`sysctl -n hw.physmem`;
     export z=`echo | awk BEGIN'{print 512*1024}'`
-    export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
+    export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print (x/2)-y-z}'`;
     gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
-    gpart add -i 3 -l freebsd-swap -t freebsd-swap ${ada0};
+    gpart add -i 3 -l freebsd-swap -t freebsd-swap -s ${y} ${ada0};
     newfs -U /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
@@ -40,9 +40,9 @@ if [ $? = 0 ]; then
       export x=`diskinfo -v ${ada0} | awk 'FNR==3{print $1}'`;
       export y=`sysctl -n hw.physmem`;
       export z=`echo | awk BEGIN'{print 200*1024*1024}'`
-      export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
+      export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print (x/2)-y-z}'`;
       gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
-      gpart add -i 3 -l freebsd-swap -t freebsd-swap ${ada0};
+      gpart add -i 3 -l freebsd-swap -t freebsd-swap -s ${y} ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
       mount -t msdosfs /dev/${ada0}p1 /mnt;
       mkdir -p /mnt/EFI/BOOT;
