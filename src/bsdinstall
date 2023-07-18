@@ -23,7 +23,7 @@ if [ $? = 0 ]; then
     export s=`echo | awk -v x=$x -v y=$y -v z=$z BEGIN'{print x-y-z}'`;
     gpart add -i 2 -l freebsd-root -t freebsd-ufs -s ${s} ${ada0};
     gpart add -i 3 -l freebsd-swap -t freebsd-swap ${ada0};
-    newfs -U -L FreeBSD /dev/${ada0}p2;
+    newfs -U /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
     echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
@@ -48,7 +48,7 @@ if [ $? = 0 ]; then
       mkdir -p /mnt/EFI/BOOT;
       cp /boot/loader.efi /mnt/EFI/BOOT/BOOTX64.efi;
       umount /mnt;
-      newfs -U -L FreeBSD /dev/${ada0}p2;
+      newfs -U /dev/${ada0}p2;
       mount /dev/${ada0}p2 /mnt;
       cpdup -i0 -x -vvv / /mnt;
       echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
