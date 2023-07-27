@@ -46,6 +46,7 @@ if [ "${question}" = "Yes" ]; then
     echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
     echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
     echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
+    echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
     echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
     echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
     umount /mnt;
@@ -64,6 +65,7 @@ if [ "${question}" = "Yes" ]; then
       echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
       echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
       echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
+      echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
       echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
       echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
       umount /mnt;
