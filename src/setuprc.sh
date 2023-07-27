@@ -8,4 +8,5 @@ setuprc(){
     chroot ${release} sysrc background_dhclient="YES"
     chroot ${release} sysrc rc_startmsgs="NO"
     chroot ${release} sysrc lightdm_enable="YES"
+    chroot ${release} sysrc swapfile="/usr/swap0"
 }
