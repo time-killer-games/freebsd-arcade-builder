@@ -29,7 +29,7 @@ if [ "${ada0}" = "" ]; then
 fi;
 export question=`/sbin/filedialogs/filedialogs --show-question "This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. Use gpart(8) to list potentially available storage devices to overwrite. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
 if [ "${question}" = "Yes" ]; then
-  `/sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete."`;
+  /sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete.";
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
@@ -65,5 +65,5 @@ if [ "${question}" = "Yes" ]; then
       umount /mnt;
     fi;
   fi;
-  `/sbin/filedialogs/filedialogs --show-message "The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage."`;
+  /sbin/filedialogs/filedialogs --show-message "The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage.";
 fi;
