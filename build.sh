@@ -97,6 +97,8 @@ build(){
     echo "  Identifier  \"Card0\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  Driver  \"vesa\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
+    chroot ${release} dd if=/dev/zero of=/usr/swap0 bs=1024k count=2048
+    chroot ${release} chmod 0600 /usr/swap0
     cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
