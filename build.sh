@@ -104,8 +104,8 @@ build(){
     cp -fR "${srcdir}/bsdinstall" ${release}/usr/sbin/bsdinstall
     chmod 755 ${release}/usr/sbin/bsdinstall
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
-    cp -fR "${srcdir}/.setwallpaper.sh" ${release}/usr/home/freebsd/.setwallpaper.sh
-    chmod 755 ${release}/usr/home/freebsd/.setwallpaper.sh
+    cp -fR "${srcdir}/.setwallpaper" ${release}/usr/home/freebsd/.setwallpaper
+    chmod 755 ${release}/usr/home/freebsd/.setwallpaper
     cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
     chown -R freebsd ${release}/usr/home/freebsd/.config
