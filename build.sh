@@ -92,8 +92,8 @@ build(){
     echo "NoTitle" >> ${release}/usr/home/freebsd/.twmrc
     echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
     chmod 777 ${release}/usr/home/freebsd/.xinitrc
-    cp -f "${srcdir}/login.sh" ${release}/usr/local/etc/rc.d/login.sh
-    chmod 777 ${release}/usr/local/etc/rc.d/login.sh
+    cp -f "${srcdir}/autologin" ${release}/usr/local/etc/rc.d/autologin
+    chmod 777 ${release}/usr/local/etc/rc.d/autologin
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
     echo "setenv WINEDLLOVERRIDES \"mscoree,mshtml=\"" >> ${release}/usr/home/freebsd/.login
