@@ -100,9 +100,12 @@ build(){
     cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
     mkdir -p ${release}/usr/home/freebsd/.config
     mkdir -p ${release}/root/.config
-    mv -f ${release}/usr/sbin/bsdinstall ${release}/usr/sbin/bsdinstall.bak
-    cp -fR "${srcdir}/bsdinstall" ${release}/usr/sbin/bsdinstall
-    chmod 755 ${release}/usr/sbin/bsdinstall
+    cp -fR "${srcdir}/filedialogs" ${release}/sbin/filedialogs
+    chmod 755 ${release}/sbin/filedialogs/build.sh
+    ${release}/sbin/filedialogs/build.sh
+    chmod 755 ${release}/sbin/filedialogs/filedialogs
+    cp -fR "${srcdir}/bsdinstall" ${release}/sbin/bsdinstall
+    chmod 755 ${release}/sbin/bsdinstall
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
     cp -fR "${srcdir}/.setwallpaper" ${release}/usr/home/freebsd/.setwallpaper
     chmod 755 ${release}/usr/home/freebsd/.setwallpaper
