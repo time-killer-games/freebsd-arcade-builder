@@ -13,5 +13,5 @@ if [ ! -f $HOME/.wallpaperset ]; then
     xfconf-query -c xfce4-desktop -p $i -s /root/Pictures/Wallpapers/courtyard_part_1.jpg
   done
 
-  echo 1 >> $HOME/.wallpaperset
+  touch $HOME/.wallpaperset
 fi
