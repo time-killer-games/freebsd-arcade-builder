@@ -23,7 +23,11 @@ export IMGUI_POPS_COLOR_1=0.07;
 export IMGUI_POPS_COLOR_2=0.07;
 export gpartshow=`gpart show`;
 export def0=`echo ${gpartshow} | awk '{printf $4}'`
-export ada0=`/sbin/filedialogs/filedialogs --get-string "${gpartshow}\n\n-----------------------------------------------------------------------\n\nEnter the name of the storage device to write this operating system to:" "${def0}"`;
+export ada0=`/sbin/filedialogs/filedialogs --get-string "${gpartshow}
+
+-----------------------------------------------------------------------
+
+Enter the name of the storage device to write this operating system to:" "${def0}"`;
 if [ "${ada0}" = "" ]; then
   exit 1;
 fi;
