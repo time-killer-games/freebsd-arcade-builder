@@ -70,4 +70,3 @@ if [ "${question}" = "Yes" ]; then
   fi;'
   /sbin/filedialogs/filedialogs --show-message "The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage.";
 fi;
-'
