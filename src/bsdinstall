@@ -31,42 +31,42 @@ fi;
 export question=`/sbin/filedialogs/filedialogs --show-question "This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
 if [ "${question}" = "Yes" ]; then
   /sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete.";
-  su -l root -c 'gpart destroy -F ${ada0};
-  gpart create -s gpt ${ada0};
+  su - root -c 'gpart destroy -F ${ada0};'
+  su - root -c 'gpart create -s gpt ${ada0};'
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
-    gpart add -i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
-    gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
-    gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
-    newfs -U /dev/${ada0}p2;
-    mount /dev/${ada0}p2 /mnt;
-    cpdup -i0 -x -vvv / /mnt;
-    echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
-    echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
-    echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
-    echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
-    echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
-    echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
-    umount /mnt;
+    su - root -c 'gpart add -i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};'
+    su - root -c 'gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};'
+    su - root -c 'gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};'
+    su - root -c 'newfs -U /dev/${ada0}p2;'
+    su - root -c 'mount /dev/${ada0}p2 /mnt;'
+    su - root -c 'cpdup -i0 -x -vvv / /mnt;'
+    su - root -c 'echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";'
+    su - root -c 'echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";'
+    su - root -c 'echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";'
+    su - root -c 'echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";'
+    su - root -c 'echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";'
+    su - root -c 'echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";'
+    su - root -c 'umount /mnt;'
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
-      gpart add -i 1 -l freebsd-boot -t efi -s 40M ${ada0};
-      gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
-      newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
-      mount -t msdosfs /dev/${ada0}p1 /mnt;
-      mkdir -p /mnt/EFI/BOOT;
-      cp /boot/loader.efi /mnt/EFI/BOOT/BOOTX64.efi;
-      umount /mnt;
-      newfs -U /dev/${ada0}p2;
-      mount /dev/${ada0}p2 /mnt;
-      cpdup -i0 -x -vvv / /mnt;
-      echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
-      echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
-      echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
-      echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
-      echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
-      echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
-      umount /mnt;
+      su - root -c 'gpart add -i 1 -l freebsd-boot -t efi -s 40M ${ada0};'
+      su - root -c 'gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};'
+      su - root -c 'newfs_msdos -F 32 -c 1 /dev/${ada0}p1;'
+      su - root -c 'mount -t msdosfs /dev/${ada0}p1 /mnt;'
+      su - root -c 'mkdir -p /mnt/EFI/BOOT;'
+      su - root -c 'cp /boot/loader.efi /mnt/EFI/BOOT/BOOTX64.efi;'
+      su - root -c 'umount /mnt;'
+      su - root -c 'newfs -U /dev/${ada0}p2;'
+      su - root -c 'mount /dev/${ada0}p2 /mnt;'
+      su - root -c 'cpdup -i0 -x -vvv / /mnt;'
+      su - root -c 'echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";'
+      su - root -c 'echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";'
+      su - root -c 'echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";'
+      su - root -c 'echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";'
+      su - root -c 'echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";'
+      su - root -c 'echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";'
+      su - root -c 'umount /mnt;'
     fi;
-  fi;'
+  fi;
   /sbin/filedialogs/filedialogs --show-message "The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage.";
 fi;
