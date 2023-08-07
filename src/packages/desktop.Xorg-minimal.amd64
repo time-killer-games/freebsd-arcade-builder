@@ -16,7 +16,10 @@ galculator
 octopkg
 neofetch
 pkgconf
+cmake
 sdl2
+gtk3
+glib
 xdotool
 xrandr
 cpdup
