@@ -21,14 +21,14 @@ export IMGUI_POPS_COLOR_0=0.07;
 export IMGUI_POPS_COLOR_1=0.07;
 export IMGUI_POPS_COLOR_2=0.07;
 export gpartshow=`gpart show`;
-export def0=`echo ${gpartshow} | awk "{printf $4}"`;
+export def0=`echo ${gpartshow} | awk '{printf $4}'`;
 echo gpart show;
 gpart show;
 export ada0=`/sbin/filedialogs/filedialogs --get-string "Enter the name of the storage device to write this new operating system to--known devices and partitions have been printed to the terminal using the gpart(8) utility:" "${def0}"`;
 if [ "${ada0}" = "" ]; then
   exit 1;
 fi;
-export question=`/sbin/filedialogs/filedialogs --show-question "This installer script will overwrite \"/dev/${ada0}\" if such a storage device exists, otherwise the process will fail. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
+export question=`/sbin/filedialogs/filedialogs --show-question "This installer script will overwrite '/dev/${ada0}' if such a storage device exists, otherwise the process will fail. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
 if [ "${question}" = "Yes" ]; then
   /sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete.";
   su -l root -c 'gpart destroy -F ${ada0};
