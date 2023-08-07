@@ -72,6 +72,7 @@ build(){
       -g operator -G video,wheel -m -s /bin/csh -k /usr/share/skel -w none
 
     # Add desktop environment
+    chroot ${release} pw usermod "root" -G video
     chroot ${release} pw mod user "root" -w none
     chroot ${release} chsh -s /bin/csh "root"
     chroot ${release} pw mod user "freebsd" -w none
