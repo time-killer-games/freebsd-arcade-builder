@@ -1,5 +1,5 @@
 #!/bin/sh
-su &
+su -l "root";
 export IMGUI_FONT_SIZE=18;
 export IMGUI_DIALOG_THEME=2;
 export IMGUI_TEXT_COLOR_0=1;
