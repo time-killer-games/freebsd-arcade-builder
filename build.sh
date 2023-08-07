@@ -78,8 +78,8 @@ build(){
     chroot ${release} chsh -s /bin/csh "freebsd"
     echo "fdesc /dev/fd fdescfs rw 0 0" >> ${release}/etc/fstab
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
-    cp -f "${srcdir}/prelogin" ${release}/usr/local/etc/rc.d/prelogin
-    chmod 755 ${release}/usr/local/etc/rc.d/prelogin
+    cp -f "${srcdir}/prelogin.sh" ${release}/usr/local/etc/rc.d/prelogin.sh
+    chmod 755 ${release}/usr/local/etc/rc.d/prelogin.sh
     chroot ${release} xdg-user-dirs-update
     sed -i '' "s@#greeter-session=example-gtk-gnome@greeter-session=slick-greeter@" ${release}/usr/local/etc/lightdm/lightdm.conf
     sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
