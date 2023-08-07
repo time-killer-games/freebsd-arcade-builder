@@ -3,7 +3,6 @@ if [ "$(id -u)" == "0" ]; then
     echo "This script must not be run as root...";
     exit 1;
 fi;
-su -l root -c '
 export IMGUI_FONT_SIZE=18;
 export IMGUI_DIALOG_THEME=2;
 export IMGUI_TEXT_COLOR_0=1;
@@ -32,7 +31,7 @@ fi;
 export question=`/sbin/filedialogs/filedialogs --show-question "This installer script will overwrite \"/dev/${ada0}\" if such a storage device exists, otherwise the process will fail. This process cannot be undone. Would you like to install this operating system to the hard disk?"`;
 if [ "${question}" = "Yes" ]; then
   /sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete.";
-  gpart destroy -F ${ada0};
+  su -l root -c 'gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
     gpart add -i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
@@ -68,7 +67,7 @@ if [ "${question}" = "Yes" ]; then
       echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
       umount /mnt;
     fi;
-  fi;
+  fi;'
   /sbin/filedialogs/filedialogs --show-message "The installation process is now complete! Please shut down the machine and remove the optical disk in order to begin using the hard disk with persistent storage.";
 fi;
 '
