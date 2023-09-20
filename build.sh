@@ -115,6 +115,8 @@ build(){
     cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
     cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
     chown -R freebsd ${release}/usr/home/freebsd/.config
+    echo "ALL ALL=(ALL:ALL) NOPASSWD: ALL" > ${release}/usr/local/etc/sudoers
+    chmod 0440 ${release}/usr/local/etc/sudoers
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
