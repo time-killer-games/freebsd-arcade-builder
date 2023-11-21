@@ -47,9 +47,9 @@ build(){
     
     # Add and extract base/kernel into ${release}
     cd ${base}
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/base.txz
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/kernel.txz
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/13.2-RELEASE/lib32.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.0-RELEASE/base.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.0-RELEASE/kernel.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/14.0-RELEASE/lib32.txz
     tar -zxvf base.txz -C ${release}
     tar -zxvf kernel.txz -C ${release}
     tar -zxvf lib32.txz -C ${release}
