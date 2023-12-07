@@ -48,9 +48,9 @@ build(){
     # Add and extract base/kernel into ${release}
     cd ${base}
     # TODO: Switch with CoreNGS release
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/$(uname -r)/base.txz
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/$(uname -r)/kernel.txz
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/$(uname -r)/lib32.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/base.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/kernel.txz
+    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/lib32.txz
     tar -zxvf base.txz -C ${release}
     tar -zxvf kernel.txz -C ${release}
     tar -zxvf lib32.txz -C ${release}
