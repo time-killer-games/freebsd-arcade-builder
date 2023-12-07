@@ -66,6 +66,11 @@ build(){
     mount -t devfs devfs ${release}/dev
     cat ${pkgdir}/${tag}.${desktop}.${platform} | xargs pkg -c ${release} install -y
     chroot ${release} pkg install -y pkg
+    if [ $(chroot ${release} pkg search wine7) == "" ]; then
+      chroot ${release} pkg install -y wine
+    else
+      chroot ${release} pkg install -y wine7
+    fi
     chroot ${release} pkg install -y winetricks
 
    # Add live session user
@@ -80,7 +85,11 @@ build(){
     chroot ${release} chsh -s /bin/csh "freebsd"
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     chroot ${release} mount -t procfs proc /proc
-    chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine7 mesa-dri"
+    if [ $(chroot ${release} pkg search wine7) == "" ]; then
+      chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
+    else
+      chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine7 mesa-dri"
+    fi
     chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
     mkdir -p ${release}/usr/local/etc/rc.d
     mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
