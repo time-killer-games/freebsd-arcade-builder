@@ -24,7 +24,7 @@ export IMGUI_POPS_COLOR_2=0.07;
 export gpartshow=`gpart show`;
 export def0=`echo ${gpartshow} | awk '{printf $4}'`;
 export suffix=`base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 6; printf '\n'`;
-while [ -c fbsdroot-$suffix ]
+while [ -c "/dev/gpt/fbsdroot-$suffix" ]
 do
  export suffix=`base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 6; printf '\n'`;
 done
