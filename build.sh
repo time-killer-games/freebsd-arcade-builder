@@ -106,6 +106,7 @@ build(){
     chmod 755 ${release}/sbin/filedialogs/filedialogs
     cp -fR "${srcdir}/bsdinstall" ${release}/sbin/bsdinstall
     chmod 755 ${release}/sbin/bsdinstall
+    mkdir -p ${release}/usr/home/freebsd/Desktop
     cp -fR "${srcdir}/bsdinstall.desktop" ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
     chmod 755 ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
