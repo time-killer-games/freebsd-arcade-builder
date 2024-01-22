@@ -23,6 +23,6 @@ glib
 xdotool
 xrandr
 cpdup
-zenity
+htop
 vim
 git
