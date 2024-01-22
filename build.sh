@@ -112,6 +112,7 @@ build(){
     cp -fR "${srcdir}/bsdinstall.desktop" ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
     chown -R freebsd ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
     chmod 755 ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
+    gio set ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop "metadata::trusted" yes
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
     echo "ALL ALL=(ALL:ALL) NOPASSWD: ALL" > ${release}/usr/local/etc/sudoers
     chmod 0440 ${release}/usr/local/etc/sudoers
