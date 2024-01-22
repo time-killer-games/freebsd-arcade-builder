@@ -100,21 +100,15 @@ build(){
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     chroot ${release} dd if=/dev/zero of=/usr/swap0 bs=1024k count=2048
     chroot ${release} chmod 0600 /usr/swap0
-    cp -fR "${srcdir}/Wallpapers" ${release}/root/Pictures/
-    mkdir -p ${release}/usr/home/freebsd/.config
-    mkdir -p ${release}/root/.config
     cp -fR "${srcdir}/filedialogs" ${release}/sbin/filedialogs
     chmod 755 ${release}/sbin/filedialogs/build.sh
     ${release}/sbin/filedialogs/build.sh
     chmod 755 ${release}/sbin/filedialogs/filedialogs
     cp -fR "${srcdir}/bsdinstall" ${release}/sbin/bsdinstall
     chmod 755 ${release}/sbin/bsdinstall
+    cp -fR "${srcdir}/bsdinstall.desktop" ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
+    chmod 755 ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
-    cp -fR "${srcdir}/.setwallpaper" ${release}/usr/home/freebsd/.setwallpaper
-    chmod 755 ${release}/usr/home/freebsd/.setwallpaper
-    cp -fR "${srcdir}/.config/autostart" ${release}/usr/home/freebsd/.config/
-    cp -fR "${srcdir}/.config/xfce4" ${release}/usr/home/freebsd/.config/
-    chown -R freebsd ${release}/usr/home/freebsd/.config
     echo "ALL ALL=(ALL:ALL) NOPASSWD: ALL" > ${release}/usr/local/etc/sudoers
     chmod 0440 ${release}/usr/local/etc/sudoers
     chroot ${release} pkg autoremove -y
