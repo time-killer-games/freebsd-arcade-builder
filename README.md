@@ -47,4 +47,4 @@ sudo rm -fr /usr/local/freebsd-build
 
 The screen resolution of the operating system is rendered at `640x480` pixels. 
 
-Edit `~/freebsd-arcade-builder/src/boot/loader.conf` to change the resolution.
+Edit  `~/freebsd-arcade-builder/build.sh` and `~/freebsd-arcade-builder/src/boot/loader.conf` to change the resolution.
