@@ -23,6 +23,7 @@ export IMGUI_POPS_COLOR_1=0.07;
 export IMGUI_POPS_COLOR_2=0.07;
 export gpartshow=`gpart show`;
 export def0=`echo ${gpartshow} | awk '{printf $4}'`;
+export suffix=`base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 6; printf '\n'`;
 echo gpart show;
 gpart show;
 export ada0=`/sbin/filedialogs/filedialogs --get-string "Enter the name of the storage device to write this new operating system to--known devices and partitions have been printed to the terminal using the gpart(8) utility:" "${def0}" 2>/dev/null`;
@@ -35,13 +36,13 @@ if [ "${question}" = "Yes" ]; then
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
   if [ `sysctl -n machdep.bootmethod` = BIOS ]; then
-    gpart add -i 1 -l freebsd-boot -t freebsd-boot -s 512K ${ada0};
+    gpart add -i 1 -l fbsdboot-$suffix -t freebsd-boot -s 512K ${ada0};
     gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
-    gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
+    gpart add -i 2 -l fbsdroot-$suffix -t freebsd-ufs ${ada0};
     newfs -U /dev/${ada0}p2;
     mount /dev/${ada0}p2 /mnt;
     cpdup -i0 -x -vvv / /mnt;
-    echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
+    echo "/dev/gpt/fbsdroot-$suffix / ufs rw 1 1" > "/mnt/etc/fstab";
     echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
     echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
     echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
@@ -50,8 +51,8 @@ if [ "${question}" = "Yes" ]; then
     umount /mnt;
   else 
     if [ `sysctl -n machdep.bootmethod` = UEFI ]; then
-      gpart add -i 1 -l freebsd-boot -t efi -s 40M ${ada0};
-      gpart add -i 2 -l freebsd-root -t freebsd-ufs ${ada0};
+      gpart add -i 1 -l fbsdboot-$suffix -t efi -s 40M ${ada0};
+      gpart add -i 2 -l fbsdroot-$suffix -t freebsd-ufs ${ada0};
       newfs_msdos -F 32 -c 1 /dev/${ada0}p1;
       mount -t msdosfs /dev/${ada0}p1 /mnt;
       mkdir -p /mnt/EFI/BOOT;
@@ -60,7 +61,7 @@ if [ "${question}" = "Yes" ]; then
       newfs -U /dev/${ada0}p2;
       mount /dev/${ada0}p2 /mnt;
       cpdup -i0 -x -vvv / /mnt;
-      echo "/dev/gpt/freebsd-root / ufs rw 1 1" > "/mnt/etc/fstab";
+      echo "/dev/gpt/fbsdroot-$suffix / ufs rw 1 1" > "/mnt/etc/fstab";
       echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
       echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
       echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
