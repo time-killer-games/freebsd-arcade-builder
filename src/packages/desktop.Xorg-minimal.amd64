@@ -22,6 +22,6 @@ glib
 xdotool
 xrandr
 cpdup
-htop
+zenity
 vim
 git
