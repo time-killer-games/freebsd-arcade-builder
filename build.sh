@@ -106,16 +106,16 @@ build(){
     chmod 755 ${release}/sbin/filedialogs/filedialogs
     cp -fR "${srcdir}/bsdinstall" ${release}/sbin/bsdinstall
     chmod 755 ${release}/sbin/bsdinstall
-    mkdir -p ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
-    chown -R freebsd ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
-    chmod 755 ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
+    chroot ${release} mkdir -p /usr/home/freebsd/Desktop /usr/home/freebsd/Documents /usr/home/freebsd/Downloads /usr/home/freebsd/Music /usr/home/freebsd/Pictures /usr/home/freebsd/Public /usr/home/freebsd/Templates /usr/home/freebsd/Videos
+    chroot ${release} chown -R freebsd /usr/home/freebsd/Desktop /usr/home/freebsd/Documents /usr/home/freebsd/Downloads /usr/home/freebsd/Music /usr/home/freebsd/Pictures /usr/home/freebsd/Public /usr/home/freebsd/Templates /usr/home/freebsd/Videos
+    chroot ${release} chmod 755 /usr/home/freebsd/Desktop /usr/home/freebsd/Documents /usr/home/freebsd/Downloads /usr/home/freebsd/Music /usr/home/freebsd/Pictures /usr/home/freebsd/Public /usr/home/freebsd/Templates /usr/home/freebsd/Videos
     cp -fR "${srcdir}/bsdinstall.desktop" ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    chown -R freebsd ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    chmod 755 ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    sudo -u freebsd -g operator dbus-launch gio set ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop metadata::trusted true
+    chroot ${release} chown -R freebsd /usr/home/freebsd/Desktop/bsdinstall.desktop
+    chroot ${release} chmod 755 /usr/home/freebsd/Desktop/bsdinstall.desktop
+    chroot ${release} sudo -u freebsd -g operator dbus-launch gio set /usr/home/freebsd/Desktop/bsdinstall.desktop metadata::trusted true
     cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
     echo "ALL ALL=(ALL:ALL) NOPASSWD: ALL" > ${release}/usr/local/etc/sudoers
-    chmod 0440 ${release}/usr/local/etc/sudoers
+    chmod 440 ${release}/usr/local/etc/sudoers
     chroot ${release} pkg autoremove -y
     chroot ${release} pkg clean -y
 
