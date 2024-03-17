@@ -1,5 +1,6 @@
 xf86-video-scfb
 xorg-minimal
+noto
 lightdm
 lightdm-gtk-greeter
 xfce
