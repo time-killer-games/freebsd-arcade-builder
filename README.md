@@ -8,7 +8,7 @@ Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 
 # Build Steps
 
-1) Clone the repository on a FreeBSD 14.0-RELEASE installation, (download FreeBSD from [FreeBSD.org](https://www.freebsd.org/)):
+1) Clone the repository on any modern FreeBSD installation, (download FreeBSD from [FreeBSD.org](https://www.freebsd.org/)):
 
 ```
 git clone https://github.com/time-killer-games/freebsd-arcade-builder ~/freebsd-arcade-builder
