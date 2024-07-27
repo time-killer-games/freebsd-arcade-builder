@@ -47,10 +47,21 @@ DEPENDENCIES :=
 override CXXFLAGS += -std=c++17
 
 ifeq ($(OS), Darwin)
-	override CXXFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
-	override CFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
-	override LDFLAGS += "/usr/local/lib/libSDL2.a" "/opt/local/lib/libz.a" "/opt/local/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit
-	override LDLIBS += "/usr/local/lib/libSDL2.a" "/opt/local/lib/libz.a" "/opt/local/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit
+	ifeq ($(shell uname -m), arm64)
+		override CXXFLAGS += -I/opt/homebrew/include -I/opt/homebrew/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+		override CFLAGS += -I/opt/homebrew/include -I/opt/homebrew/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+ 		override LDFLAGS += "/opt/homebrew/lib/libSDL2.a" "/opt/homebrew/opt/zlib/lib/libz.a" "/opt/homebrew/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit -Xlinker -no_warn_duplicate_libraries
+		override CXXFLAGS += -I/opt/homebrew/include -I/opt/homebrew/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+		override CFLAGS += -I/opt/homebrew/include -I/opt/homebrew/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+ 		override LDLIBS += "/opt/homebrew/lib/libSDL2.a" "/opt/homebrew/opt/zlib/lib/libz.a" "/opt/homebrew/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit -Xlinker -no_warn_duplicate_libraries
+ 	else
+ 		override CXXFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+		override CFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+ 		override LDFLAGS += "/usr/local/lib/libSDL2.a" "/usr/local/opt/zlib/lib/libz.a" "/usr/local/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit -Xlinker -no_warn_duplicate_libraries
+		override CXXFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+		override CFLAGS += -I/usr/local/include -I/usr/local/include/SDL2 -DPROCESS_GUIWINDOW_IMPL -ObjC++
+ 		override LDLIBS += "/usr/local/lib/libSDL2.a" "/usr/local/opt/zlib/lib/libz.a" "/usr/local/lib/libpng.a" -liconv -Wl,-framework,CoreAudio -Wl,-framework,AudioToolbox -Wl,-weak_framework,CoreHaptics -Wl,-weak_framework,GameController -Wl,-framework,ForceFeedback -lobjc -Wl,-framework,CoreVideo -Wl,-framework,Cocoa -Wl,-framework,Carbon -Wl,-framework,IOKit -Wl,-weak_framework,QuartzCore -Wl,-weak_framework,Metal -framework CoreFoundation -framework CoreGraphics -framework AppKit -Xlinker -no_warn_duplicate_libraries
+ 	endif
 else ifeq ($(OS), Linux)
 	override CXXFLAGS += $(shell pkg-config --cflags sdl2) -DPROCESS_GUIWINDOW_IMPL
 	override CFLAGS += $(shell pkg-config --cflags sdl2) -DPROCESS_GUIWINDOW_IMPL
