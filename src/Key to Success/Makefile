@@ -118,11 +118,11 @@ rwildcard=$(wildcard $1/$2) $(foreach d,$(wildcard $1/*),$(call rwildcard,$d,$2)
 PATH := $(eTCpath)$(PATH)
 SHELL := /bin/sh
 CP := /bin/cp
+MKBUILDDIR := $(shell mkdir -p "build")
 
 .PHONY: all clean .FORCE
 
 all: .FORCE
-	MKBUILDDIR := $(shell mkdir -p "build")
 	$(CP) -f "src/stigma/data.res" "build/Key to Success.res"
 ifeq ($(OS), Darwin)
 	@$(MAKE) -C "src" WORKDIR="stigma/" CODEGEN="stigma/" GMODE="Compile" GRAPHICS="OpenGL1" AUDIO="SDL" COLLISION="Precise" PLATFORM="MacOSX" TARGET-PLATFORM="MacOSX" CC="clang" CXX="clang++" MAKE="gmake" CXXFLAGS="-fdiagnostics-color=always" COMPILEPATH="Clang" EXTENSIONS=" Universal_System/Extensions/chdir Universal_System/Extensions/HideErrors Universal_System/Extensions/Paths Universal_System/Extensions/Alarms" OUTPUTNAME="../build/Key to Success" CXXFLAGS="-fdiagnostics-color=always -std=c++17 -D_REENTRANT -Wall -s -O3 -fno-rtti -fno-exceptions -flto -fdata-sections -ffunction-sections -fno-pie -IBridges/OpenGL -IGraphics_Systems/OpenGL-Common/ -DHIDE_DEBUG_MESSAGES -DPATH_EXT_SET -fexceptions -I. -Istigma/"
