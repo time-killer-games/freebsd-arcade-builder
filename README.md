@@ -31,7 +31,7 @@ SetWindowPos(hwnd, HWND_TOP, 0, 0, w, h, SWP_FRAMECHANGED);
 sudo ~/freebsd-arcade-builder/build.sh
 ```
 
-4) The output iso file will be located at "/usr/local/freebsd-build/iso/freebsd.iso". Get it out of there.
+4) The output iso file will be located at `/usr/local/freebsd-build/iso/freebsd.iso`. Get it out of there.
 
 5) Run the following to delete files you longer need:
 
