@@ -1,0 +1,158 @@
+make: Entering directory '/usr/bin/stigma-dev'
+make[1]: Entering directory '/usr/bin/stigma-dev/ENIGMAsystem/SHELL'
+-e 
+################ Compiler Info ################
+g++ (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+CXXFLAGS="-fdiagnostics-color=always -std=c++17 -D_REENTRANT -I/usr/include/SDL2 -DPROCESS_GUIWINDOW_IMPL  -D_REENTRANT -I/usr/include/SDL2 -Wall -s -O3 -fno-rtti -fno-exceptions -flto -fdata-sections -ffunction-sections -fno-pie  -IPlatforms/xlib/Linux/ -IBridges/OpenGL -IGraphics_Systems/OpenGL-Common/ -D_REENTRANT -I/usr/include/SDL2 -DHIDE_DEBUG_MESSAGES -DPATH_EXT_SET -fexceptions -IPlatforms/xlib/Info -IGraphics_Systems/OpenGL1/Info -IAudio_Systems/SDL/Info -ICollision_Systems/Precise/Info -IWidget_Systems/None/Info -INetworking_Systems/None/Info -IUniversal_System/Info -I. -I/home/ubuntu/.enigma/ -I../../shared/ "
+CFLAGS="-D_REENTRANT -I/usr/include/SDL2 -DPROCESS_GUIWINDOW_IMPL  -D_REENTRANT -I/usr/include/SDL2 -Wall -s -O3 -flto -fno-exceptions -fdata-sections -ffunction-sections -fno-pie  -IPlatforms/xlib/Linux/ -DHIDE_DEBUG_MESSAGES -IPlatforms/xlib/Info -IGraphics_Systems/OpenGL1/Info -IAudio_Systems/SDL/Info -ICollision_Systems/Precise/Info -IWidget_Systems/None/Info -INetworking_Systems/None/Info -IUniversal_System/Info -I. -I/home/ubuntu/.enigma/ -I../../shared/"
+LDFLAGS="-lstdc++fs -lSDL2 -lm -lasound -lm -ldl -lpthread -lpulse-simple -pthread -lpulse -pthread -lX11 -lXext -lXcursor -lXinerama -lXi -lXfixes -lXrandr -lXss -lXxf86vm -ldrm -lgbm -lwayland-egl -lwayland-client -lwayland-cursor -lxkbcommon -ldecor-0 -lpthread -lrt -DPROCESS_GUIWINDOW_IMPL -lX11 -lSDL2 -lpthread -lz -lm -lpng -lxcb -lXrandr -lXinerama -lXext -flto -s -O3 -no-pie"
+LDLIBS=""
+-e ################################################
+
+[g++] libEGMstd.cpp
+[g++] SHELLmain.cpp
+In file included from [01m[K./Platforms/General/include.h:10[m[K,
+                 from [01m[K./Platforms/xlib/include.h:2[m[K,
+                 from [01m[K/home/ubuntu/.enigma/API_Switchboard.h:31[m[K,
+                 from [01m[KSHELLmain.cpp:57[m[K:
+[01m[K./Platforms/General/PFexternals.h:24:12:[m[K [01;35m[Kwarning: [m[K‘[01m[Kenigma_user::dll_stdcall[m[K’ defined but not used [[01;35m[K-Wunused-variable[m[K]
+   24 | static int [01;35m[Kdll_stdcall[m[K = 1;
+      |            [01;35m[K^~~~~~~~~~~[m[K
+[01m[K./Platforms/General/PFexternals.h:23:12:[m[K [01;35m[Kwarning: [m[K‘[01m[Kenigma_user::dll_cdecl[m[K’ defined but not used [[01;35m[K-Wunused-variable[m[K]
+   23 | static int [01;35m[Kdll_cdecl[m[K   = 0;
+      |            [01;35m[K^~~~~~~~~[m[K
+[g++] Platforms/General/PFmain.cpp
+[g++] Platforms/General/PFthreads.cpp
+[g++] Platforms/General/PFwindow.cpp
+[g++] Platforms/xlib/XDisplayGetters.cpp
+[g++] Platforms/xlib/XLIBicon.cpp
+[01m[KPlatforms/xlib/XLIBicon.cpp:[m[K In function ‘[01m[Kvoid enigma::XSetIconFromSprite(Display*, Window, int, int)[m[K’:
+[01m[KPlatforms/xlib/XLIBicon.cpp:48:34:[m[K [01;35m[Kwarning: [m[Koperation on ‘[01m[Kelem_numb[m[K’ may be undefined [[01;35m[K-Wsequence-point[m[K]
+   48 |   unsigned elem_numb = [01;35m[Kelem_numb = 2 + img.w * img.h[m[K;
+      |                        [01;35m[K~~~~~~~~~~^~~~~~~~~~~~~~~~~~~[m[K
+[g++] Platforms/xlib/XLIBmain.cpp
+[g++] Platforms/xlib/XLIBsystem.cpp
+[g++] Platforms/xlib/XLIBwindow.cpp
+[01m[KPlatforms/xlib/XLIBwindow.cpp:[m[K In function ‘[01m[Kvoid enigma_user::window_set_size(unsigned int, unsigned int)[m[K’:
+[01m[KPlatforms/xlib/XLIBwindow.cpp:515:27:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kunsigned int[m[K’ [[01;35m[K-Wsign-compare[m[K]
+  515 |   if ([01;35m[Kenigma::windowWidth == w[m[K && enigma::windowHeight == h) return;
+      |       [01;35m[K~~~~~~~~~~~~~~~~~~~~^~~~[m[K
+[01m[KPlatforms/xlib/XLIBwindow.cpp:515:56:[m[K [01;35m[Kwarning: [m[Kcomparison of integer expressions of different signedness: ‘[01m[Kint[m[K’ and ‘[01m[Kunsigned int[m[K’ [[01;35m[K-Wsign-compare[m[K]
+  515 |   if (enigma::windowWidth == w && [01;35m[Kenigma::windowHeight == h[m[K) return;
+      |                                   [01;35m[K~~~~~~~~~~~~~~~~~~~~~^~~~[m[K
+[g++] Platforms/General/POSIX/main.cpp
+[g++] Platforms/General/POSIX/POSIXproccess.cpp
+[g++] Platforms/General/POSIX/POSIXthreads.cpp
+[g++] Platforms/General/POSIX/Utility.cpp
+[g++] Graphics_Systems/OpenGL1/d3d.cpp
+[g++] Graphics_Systems/OpenGL1/shader.cpp
+[g++] Graphics_Systems/OpenGL1/shared.cpp
+[g++] Graphics_Systems/OpenGL1/std.cpp
+[g++] Graphics_Systems/OpenGL1/stdraw.cpp
+[g++] Graphics_Systems/OpenGL1/vertex.cpp
+[g++] Graphics_Systems/General/GSbackground.cpp
+[g++] Graphics_Systems/General/GSblend.cpp
+[g++] Graphics_Systems/General/GScolors.cpp
+[g++] Graphics_Systems/General/GScurves.cpp
+[g++] Graphics_Systems/General/GSd3d.cpp
+[g++] Graphics_Systems/General/GSfont.cpp
+[g++] Graphics_Systems/General/GSmatrix.cpp
+[g++] Graphics_Systems/General/GSmodel.cpp
+[g++] Graphics_Systems/General/GSprimitives.cpp
+[g++] Graphics_Systems/General/GSscreen.cpp
+[g++] Graphics_Systems/General/GSsprite.cpp
+[g++] Graphics_Systems/General/GSstdraw.cpp
+[g++] Graphics_Systems/General/GSsurface.cpp
+[g++] Graphics_Systems/General/GStextures.cpp
+[g++] Graphics_Systems/General/GStiles.cpp
+[g++] Graphics_Systems/General/GSvertex.cpp
+[g++] Graphics_Systems/General/texture_atlas.cpp
+[g++] Audio_Systems/SDL/SDLadvanced.cpp
+[g++] Audio_Systems/SDL/SDLbasic.cpp
+[g++] Audio_Systems/SDL/SDLsystem.cpp
+[01m[KAudio_Systems/SDL/SDLsystem.cpp:[m[K In function ‘[01m[Kint enigma::audiosystem_initialize()[m[K’:
+[01m[KAudio_Systems/SDL/SDLsystem.cpp:14:7:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Kinitted[m[K’ [[01;35m[K-Wunused-variable[m[K]
+   14 |   int [01;35m[Kinitted[m[K = Mix_Init(flags);
+      |       [01;35m[K^~~~~~~[m[K
+[g++] Collision_Systems/Precise/placeholderlinks.cpp
+[g++] Collision_Systems/Precise/PRECfuncs.cpp
+[g++] Collision_Systems/Precise/PRECimpl.cpp
+[g++] Widget_Systems/None/nowidget_impl.cpp
+[g++] Widget_Systems/None/default_log.cpp
+[g++] Universal_System/bufferstruct.cpp
+[g++] Universal_System/debugscope.cpp
+[g++] Universal_System/depth_draw.cpp
+[g++] Universal_System/directoryglobals.cpp
+[g++] Universal_System/dynamic_args.cpp
+[g++] Universal_System/ENIGMA_GLOBALS.cpp
+[g++] Universal_System/estring.cpp
+[g++] Universal_System/fileio.cpp
+[g++] Universal_System/gif_format.cpp
+[g++] Universal_System/globalupdate.cpp
+[g++] Universal_System/highscore_functions.cpp
+[g++] Universal_System/image_formats.cpp
+[g++] Universal_System/joysticks.cpp
+[g++] Universal_System/lives.cpp
+[g++] Universal_System/mathnc.cpp
+[g++] Universal_System/move_functions.cpp
+[g++] Universal_System/random.cpp
+[g++] Universal_System/rectpack.cpp
+[g++] Universal_System/reflexive_types.cpp
+[g++] Universal_System/roomsystem.cpp
+[g++] Universal_System/shaderstruct.cpp
+[g++] Universal_System/terminal_io.cpp
+[g++] Universal_System/var_array.cpp
+[g++] Universal_System/zlib.cpp
+[g++] Universal_System/Object_Tiers/collisions_object.cpp
+[g++] Universal_System/Object_Tiers/graphics_object.cpp
+[g++] Universal_System/Object_Tiers/object.cpp
+[g++] Universal_System/Object_Tiers/planar_object.cpp
+[g++] Universal_System/Object_Tiers/timelines_object.cpp
+[g++] Universal_System/Object_Tiers/transform_object.cpp
+[g++] Universal_System/Instances/callbacks_events.cpp
+[g++] Universal_System/Instances/instance.cpp
+[g++] Universal_System/Instances/instance_planar.cpp
+[g++] Universal_System/Instances/instance_system.cpp
+[g++] Universal_System/Resources/asset_index.cpp
+[g++] Universal_System/Resources/backgroundinit.cpp
+[g++] Universal_System/Resources/backgrounds.cpp
+[g++] Universal_System/Resources/backgrounds_internal.cpp
+[g++] Universal_System/Resources/fontinit.cpp
+[g++] Universal_System/Resources/fontstruct.cpp
+[g++] Universal_System/Resources/loading.cpp
+[01m[KUniversal_System/Resources/loading.cpp:[m[K In function ‘[01m[Kint enigma::initialize_everything()[m[K’:
+[01m[KUniversal_System/Resources/loading.cpp:94:15:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kchar* realpath(const char*, char*)[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K-Wunused-result[m[K]
+   94 |       [01;35m[Krealpath("/proc/self/exe", exename)[m[K;
+      |       [01;35m[K~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[g++] Universal_System/Resources/resource_data.cpp
+[g++] Universal_System/Resources/soundinit.cpp
+[g++] Universal_System/Resources/spriteinit.cpp
+[g++] Universal_System/Resources/sprites.cpp
+[g++] Universal_System/Resources/sprites_internal.cpp
+[g++] Universal_System/Extensions/chdir/chdir.cpp
+[g++] Universal_System/Extensions/Paths/path_functions.cpp
+[g++] Universal_System/Extensions/Paths/pathinit.cpp
+[g++] Universal_System/Extensions/Paths/pathstruct.cpp
+[g++] Universal_System/Extensions/Alarms/alarmcode.cpp
+[g++] Bridges/OpenGL/GLload.cpp
+[g++] Bridges/xlib-OpenGL/graphics_bridge.cpp
+[g++] Bridges/xlib-OpenGL1/attribs.cpp
+[g++] ../../shared/lib/cproc/cproc.cpp
+[01m[K../../shared/lib/cproc/cproc.cpp:[m[K In function ‘[01m[Kvoid ngs::cproc::executed_process_write_to_standard_input(int, const char*)[m[K’:
+[01m[K../../shared/lib/cproc/cproc.cpp:927:10:[m[K [01;35m[Kwarning: [m[Kignoring return value of ‘[01m[Kssize_t write(int, const void*, size_t)[m[K’ declared with attribute ‘[01m[Kwarn_unused_result[m[K’ [[01;35m[K-Wunused-result[m[K]
+  927 |     [01;35m[Kwrite((int)stdipt_map[proc_index], str.data(), str.length() + 1)[m[K;
+      |     [01;35m[K~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+[g++] ../../shared/lib/xproc/xproc.cpp
+[g++] ../../shared/apifilesystem/filesystem.cpp
+[g++] ../../shared/tempdir/tempdir.cpp
+Linking /home/ubuntu/Downloads/Key to Success
+/usr/bin/ld: /tmp/ccQXDLkM.ltrans8.ltrans.o: in function `enigma::zlib_decompress(unsigned char*, int, int, unsigned char*)':
+<artificial>:(.text+0x73b): undefined reference to `uncompress'
+collect2: error: ld returned 1 exit status
+make[1]: *** [Makefile:252: compile_game] Error 1
+make[1]: Leaving directory '/usr/bin/stigma-dev/ENIGMAsystem/SHELL'
+make: Leaving directory '/usr/bin/stigma-dev'

@@ -50,10 +50,8 @@ build(){
     # TODO: Switch with CoreNGS release
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/base.txz
     fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/kernel.txz
-    fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/`uname -r`/lib32.txz
     tar -zxvf base.txz -C ${release}
     tar -zxvf kernel.txz -C ${release}
-    tar -zxvf lib32.txz -C ${release}
 
     # Add base items
     touch ${release}/etc/fstab
@@ -66,8 +64,6 @@ build(){
     mount -t devfs devfs ${release}/dev
     cat ${pkgdir}/${tag}.${desktop}.${platform} | xargs pkg -c ${release} install -y
     chroot ${release} pkg install -y pkg
-    chroot ${release} pkg install -y wine
-    chroot ${release} pkg install -y winetricks
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
@@ -81,8 +77,6 @@ build(){
     chroot ${release} chsh -s /bin/csh "freebsd"
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     chroot ${release} mount -t procfs proc /proc
-    chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
-    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
     mkdir -p ${release}/usr/local/etc/rc.d
     mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
     echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
@@ -97,12 +91,16 @@ build(){
     chmod 777 ${release}/usr/local/etc/rc.d/autologin.sh
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
-    echo "setenv WINEDLLOVERRIDES \"mscoree,mshtml=\"" >> ${release}/usr/home/freebsd/.login
     echo "startx -- -nocursor" >> ${release}/usr/home/freebsd/.login
     chmod 777 ${release}/usr/home/freebsd/.login
     echo "twm -display :0 &" > ${release}/usr/home/freebsd/start.sh
     echo "sleep 5" >> ${release}/usr/home/freebsd/start.sh
-    echo "wine /usr/home/freebsd/executable/run.exe" >> ${release}/usr/home/freebsd/start.sh
+    cp -fR "${srcdir}/Key to Success" "${release}/usr/home/freebsd/Key to Success"
+    prevpwd=`pwd`
+    cd "${release}/usr/home/freebsd/Key to Success"
+    ${release}/usr/local/bin/gmake
+    cd $prevpwd
+    echo "'/usr/home/freebsd/Key to Success/build/Key to Success'" >> ${release}/usr/home/freebsd/start.sh
     echo "/sbin/shutdown -p now" >> ${release}/usr/home/freebsd/start.sh
     chmod 777 ${release}/usr/home/freebsd/start.sh
     echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -159,42 +157,7 @@ build(){
     echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    cp -fR "${srcdir}/wine/executable" ${release}/usr/home/freebsd/
-
-    # remove all packages that are not permissive; cannot use "pkg remove" because it will also remove permissive packages we need
-    chroot ${release} pkg remove -y winetricks && chroot ${release} pkg autoremove -y && chroot ${release} pkg clean -y
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq binutils | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq ca_root_nss | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq desktop-file-utils | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gcc* | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gettext-runtime | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq gnutls | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq jbigkit | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libiconv | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libidn2 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq liblz4 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libtasn1 | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq libunistring | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq nettle | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq readline | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq tpm-emulator | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release pkg info -lq webcamd | sed -e 's/^/\/usr\/local\/freebsd-build\/release/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq binutils | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq ca_root_nss | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq desktop-file-utils | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gcc* | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gettext-runtime | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq gnutls | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq jbigkit | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libiconv | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libidn2 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq liblz4 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libtasn1 | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq libunistring | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq nettle | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq readline | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq tpm-emulator | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
-    rm -fr `chroot /usr/local/freebsd-build/release /usr/local/share/wine/pkg32.sh info -lq webcamd | sed -e 's/^/\/usr\/local\/freebsd-build\/release\/usr\/home\/freebsd\/.i386-wine-pkg/' | tr '\n' ' '`
+    chmod 777 "${release}/usr/home/freebsd/Key to Success/build/Key to Success"
     umount -f ${release}/proc
     
     # Add software overlays 
@@ -206,7 +169,6 @@ build(){
     # Move source files
     cp ${base}/base.txz ${release}/usr/local/freebsd/base.txz
     cp ${base}/kernel.txz ${release}/usr/local/freebsd/kernel.txz
-    cp ${base}/lib32.txz ${release}/usr/local/freebsd/lib32.txz
     
     # rc
     . ${srcdir}/setuprc.sh
