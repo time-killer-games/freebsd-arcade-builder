@@ -14,7 +14,7 @@ Based on Potabi by Kai Lyons: https://github.com/Potabi/potabi-build
 git clone https://github.com/time-killer-games/freebsd-arcade-builder ~/freebsd-arcade-builder
 ```
 
-2) Overwrite "~/freebsd-arcade-builder/src/wine/executable/run.exe" with a valid Microsoft Windows EXE. 
+2) Overwrite `~/freebsd-arcade-builder/src/wine/executable/run.exe` with a valid Microsoft Windows EXE. 
 
 The executable's main window must have no border or title bar and should fill the primary monitor's resolution. Make sure there is no way to switch out of fullscreen into windowed mode. GameMaker games are known to work, (both legacy and Studio-branded versions). Use GameMaker native DLL extensions sparingly, as they might not be compatible with WINE. Mouse touchpads and touch screens do not work well without additional configuration in most cases. Gamepad and joystick support needs to be added manually. For Visual C++ developers, use the code below, to set your window to fullscreen: 
 
