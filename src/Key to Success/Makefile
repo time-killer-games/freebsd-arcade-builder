@@ -119,6 +119,7 @@ PATH := $(eTCpath)$(PATH)
 SHELL := /bin/sh
 CP := /bin/cp
 MKBUILDDIR := $(shell mkdir -p "build")
+EXPORTPKGCONF := $(shell export PKG_CONFIG_PATH=/usr/lib/64/pkgconfig)
 
 .PHONY: all clean .FORCE
 
