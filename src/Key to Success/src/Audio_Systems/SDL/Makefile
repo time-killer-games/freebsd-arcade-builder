@@ -22,7 +22,6 @@ else ifeq  ($(TARGET-PLATFORM), NetBSD)
 else ifeq  ($(TARGET-PLATFORM), OpenBSD)
 	override LDLIBS += $(shell pkg-config --libs SDL2_mixer) -lvorbisfile -lvorbisenc -lvorbis -lopusfile -lopus -logg -lFLAC -lmodplug -lmpg123 -lsndfile
 else ifeq  ($(TARGET-PLATFORM), SunOS)
-	SDLMIXERREPOS := $(shell cd SDL_mixer;mkdir build;cd build;../configure;make;sudo make install;cd ../..)
 	override LDLIBS += $(shell pkg-config --libs SDL2_mixer) -lvorbisfile -lvorbisenc -lvorbis -lopusfile -lopus -logg -lFLAC -lmodplug -lmpg123 -lsndfile
 endif
 override CXXFLAGS += $(shell pkg-config --cflags SDL2_mixer)
