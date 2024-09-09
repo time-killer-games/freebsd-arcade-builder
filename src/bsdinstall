@@ -24,7 +24,7 @@ export IMGUI_POPS_COLOR_2=0.07;
 export gpartshow=`gpart show`;
 export def0=`echo ${gpartshow} | awk '{printf $4}'`;
 export suffix=`base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 6; printf '\n'`;
-while [ -c "/dev/gpt/fbsdroot-$suffix" ]
+while [ -c "/dev/gpt/fbsdroot-${suffix}" ]
 do
  export suffix=`base64 < /dev/urandom | tr -d 'O0Il1+/' | head -c 6; printf '\n'`;
 done
@@ -40,20 +40,20 @@ if [ "${question}" = "Yes" ]; then
   /sbin/filedialogs/filedialogs --show-message "Please be patient while the operating system is writing files to the hard disk. Do not log out of this user session or shut down the machine until you have been notified the process is complete." 2>/dev/null;
   gpart destroy -F ${ada0};
   gpart create -s gpt ${ada0};
-  gpart add -i 1 -l fbsdbios-$suffix -t freebsd-boot -s 512K ${ada0};
+  gpart add -i 1 -l fbsdbios-${suffix} -t freebsd-boot -s 512K ${ada0};
   gpart bootcode -b /boot/pmbr -p /boot/gptboot -i 1 ${ada0};
-  gpart add -i 2 -l fbsdroot-$suffix -t freebsd-ufs -s ${size} ${ada0};
+  gpart add -i 2 -l fbsdroot-${suffix} -t freebsd-ufs -s ${size}B ${ada0};
   newfs -U /dev/${ada0}p2;
   mount /dev/${ada0}p2 /mnt;
   cpdup -i0 -x -vvv / /mnt;
-  echo "/dev/gpt/fbsdroot-$suffix / ufs rw 1 1" > "/mnt/etc/fstab";
+  echo "/dev/gpt/fbsdroot-${suffix} / ufs rw 1 1" > "/mnt/etc/fstab";
   echo "fdesc /dev/fd fdescfs rw 0 0" >> "/mnt/etc/fstab";
   echo "proc /proc procfs rw 0 0" >> "/mnt/etc/fstab";
   echo "md99 none swap sw,file=/usr/swap0,late 0 0" >> "/mnt/etc/fstab";
   echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
   echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
   umount /mnt;
-  gpart add -i 3 -l fbsduefi-$suffix -t efi -s 40M ${ada0};
+  gpart add -i 3 -l fbsduefi-${suffix} -t efi -s 40M ${ada0};
   newfs_msdos -F 32 -c 1 /dev/${ada0}p3;
   mount -t msdosfs /dev/${ada0}p3 /mnt;
   mkdir -p /mnt/EFI/BOOT;
