@@ -53,7 +53,7 @@ if [ "${question}" = "Yes" ]; then
   echo "efi_max_resolution=\"1920x1080\"" > "/mnt/boot/loader.conf";
   echo "vbe_max_resolution=\"1920x1080\"" >> "/mnt/boot/loader.conf";
   umount /mnt;
-  gpart add -i 3 -l fbsduefi-${suffix} -t efi -s 40M ${ada0};
+  gpart add -i 3 -l fbsduefi-${suffix} -t efi ${ada0};
   newfs_msdos -F 32 -c 1 /dev/${ada0}p3;
   mount -t msdosfs /dev/${ada0}p3 /mnt;
   mkdir -p /mnt/EFI/BOOT;
