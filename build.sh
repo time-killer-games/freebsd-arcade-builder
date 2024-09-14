@@ -67,7 +67,7 @@ build(){
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
-      -c freebsd -d "/usr/home/freebsd"\
+      -c freebsd -d "/home/freebsd"\
       -g operator -G video,wheel -m -s /bin/csh -k /usr/share/skel -w none
 
     # Add desktop environment
@@ -79,30 +79,30 @@ build(){
     chroot ${release} mount -t procfs proc /proc
     mkdir -p ${release}/usr/local/etc/rc.d
     mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
-    echo "RandomPlacement" > ${release}/usr/home/freebsd/.twmrc
-    echo "BorderWidth 0" >> ${release}/usr/home/freebsd/.twmrc
-    echo "NoTitle" >> ${release}/usr/home/freebsd/.twmrc
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
+    echo "/home/freebsd/start.sh" > ${release}/home/freebsd/.xinitrc
+    echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/home/freebsd/.xinitrc
+    chmod 777 ${release}/home/freebsd/.xinitrc
+    echo "RandomPlacement" > ${release}/home/freebsd/.twmrc
+    echo "BorderWidth 0" >> ${release}/home/freebsd/.twmrc
+    echo "NoTitle" >> ${release}/home/freebsd/.twmrc
+    echo "/home/freebsd/start.sh" > ${release}/home/freebsd/.xinitrc
+    chmod 777 ${release}/home/freebsd/.xinitrc
     cp -f "${srcdir}/autologin.sh" ${release}/usr/local/etc/rc.d/autologin.sh
     chmod 777 ${release}/usr/local/etc/rc.d/autologin.sh
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
-    echo "startx -- -nocursor" >> ${release}/usr/home/freebsd/.login
-    chmod 777 ${release}/usr/home/freebsd/.login
-    echo "twm -display :0 &" > ${release}/usr/home/freebsd/start.sh
-    echo "sleep 5" >> ${release}/usr/home/freebsd/start.sh
-    cp -fR "${srcdir}/Key to Success" "${release}/usr/home/freebsd/Key to Success"
+    echo "startx -- -nocursor" >> ${release}/home/freebsd/.login
+    chmod 777 ${release}/home/freebsd/.login
+    echo "twm -display :0 &" > ${release}/home/freebsd/start.sh
+    echo "sleep 5" >> ${release}/home/freebsd/start.sh
+    cp -fR "${srcdir}/Key to Success" "${release}/home/freebsd/Key to Success"
     prevpwd=`pwd`
-    cd "${release}/usr/home/freebsd/Key to Success"
+    cd "${release}/home/freebsd/Key to Success"
     ${release}/usr/local/bin/gmake
     cd $prevpwd
-    echo "'/usr/home/freebsd/Key to Success/build/Key to Success'" >> ${release}/usr/home/freebsd/start.sh
-    echo "/sbin/shutdown -p now" >> ${release}/usr/home/freebsd/start.sh
-    chmod 777 ${release}/usr/home/freebsd/start.sh
+    echo "'/home/freebsd/Key to Success/build/Key to Success'" >> ${release}/home/freebsd/start.sh
+    echo "/sbin/shutdown -p now" >> ${release}/home/freebsd/start.sh
+    chmod 777 ${release}/home/freebsd/start.sh
     echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -157,7 +157,7 @@ build(){
     echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    chmod 777 "${release}/usr/home/freebsd/Key to Success/build/Key to Success"
+    chmod 777 "${release}/home/freebsd/Key to Success/build/Key to Success"
     umount -f ${release}/proc
     
     # Add software overlays 
