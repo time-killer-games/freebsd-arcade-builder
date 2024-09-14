@@ -68,7 +68,7 @@ build(){
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
-      -c freebsd -d "/usr/home/freebsd"\
+      -c freebsd -d "/home/freebsd"\
       -g operator -G video,wheel -m -s /bin/csh -k /usr/share/skel -w none
 
     # Add desktop environment
@@ -84,10 +84,10 @@ build(){
     chroot ${release} xdg-user-dirs-update
     sed -i '' "s@#greeter-session=example-gtk-gnome@greeter-session=slick-greeter@" ${release}/usr/local/etc/lightdm/lightdm.conf
     sed -i '' "s@#user-session=default@user-session=xfce@" ${release}/usr/local/etc/lightdm/lightdm.conf
-    echo "exec ck-launch-session startxfce4" > ${release}/usr/home/freebsd/.xinitrc
-    chmod 755 ${release}/usr/home/freebsd/.xinitrc
-    echo "startx" > ${release}/usr/home/freebsd/.login
-    chmod 755 ${release}/usr/home/freebsd/.login
+    echo "exec ck-launch-session startxfce4" > ${release}/home/freebsd/.xinitrc
+    chmod 755 ${release}/home/freebsd/.xinitrc
+    echo "startx" > ${release}/home/freebsd/.login
+    chmod 755 ${release}/home/freebsd/.login
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
     echo "Section  \"Device\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -106,14 +106,14 @@ build(){
     chmod 755 ${release}/sbin/filedialogs/filedialogs
     cp -fR "${srcdir}/bsdinstall" ${release}/sbin/bsdinstall
     chmod 755 ${release}/sbin/bsdinstall
-    mkdir -p ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
-    chown -R freebsd ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
-    chmod 755 ${release}/usr/home/freebsd/Desktop ${release}/usr/home/freebsd/Documents ${release}/usr/home/freebsd/Downloads ${release}/usr/home/freebsd/Music ${release}/usr/home/freebsd/Pictures ${release}/usr/home/freebsd/Public ${release}/usr/home/freebsd/Templates ${release}/usr/home/freebsd/Videos
-    cp -fR "${srcdir}/bsdinstall.desktop" ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    chown -R freebsd ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    chmod 755 ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop
-    sudo -u freebsd -g operator dbus-launch gio set ${release}/usr/home/freebsd/Desktop/bsdinstall.desktop metadata::trusted true
-    cp -fR "${srcdir}/.cpignore" ${release}/usr/home/freebsd/.cpignore
+    mkdir -p ${release}/home/freebsd/Desktop ${release}/home/freebsd/Documents ${release}/home/freebsd/Downloads ${release}/home/freebsd/Music ${release}/home/freebsd/Pictures ${release}/home/freebsd/Public ${release}/home/freebsd/Templates ${release}/home/freebsd/Videos
+    chown -R freebsd ${release}/home/freebsd/Desktop ${release}/home/freebsd/Documents ${release}/home/freebsd/Downloads ${release}/home/freebsd/Music ${release}/home/freebsd/Pictures ${release}/home/freebsd/Public ${release}/home/freebsd/Templates ${release}/home/freebsd/Videos
+    chmod 755 ${release}/home/freebsd/Desktop ${release}/home/freebsd/Documents ${release}/home/freebsd/Downloads ${release}/home/freebsd/Music ${release}/home/freebsd/Pictures ${release}/home/freebsd/Public ${release}/home/freebsd/Templates ${release}/home/freebsd/Videos
+    cp -fR "${srcdir}/bsdinstall.desktop" ${release}/home/freebsd/Desktop/bsdinstall.desktop
+    chown -R freebsd ${release}/home/freebsd/Desktop/bsdinstall.desktop
+    chmod 755 ${release}/home/freebsd/Desktop/bsdinstall.desktop
+    sudo -u freebsd -g operator dbus-launch gio set ${release}/home/freebsd/Desktop/bsdinstall.desktop metadata::trusted true
+    cp -fR "${srcdir}/.cpignore" ${release}/home/freebsd/.cpignore
     echo "ALL ALL=(ALL:ALL) NOPASSWD: ALL" > ${release}/usr/local/etc/sudoers
     chmod 0440 ${release}/usr/local/etc/sudoers
     chroot ${release} pkg autoremove -y
