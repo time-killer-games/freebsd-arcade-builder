@@ -65,8 +65,8 @@ ifeq ($(OS), Darwin)
 else ifeq ($(OS), Linux)
 	override CXXFLAGS += $(shell pkg-config --cflags sdl2) -DPROCESS_GUIWINDOW_IMPL
 	override CFLAGS += $(shell pkg-config --cflags sdl2) -DPROCESS_GUIWINDOW_IMPL
-	override LDLIBS += $(shell pkg-config --libs --static sdl2) -DPROCESS_GUIWINDOW_IMPL
-	override LDFLAGS += $(shell pkg-config --libs --static sdl2) -DPROCESS_GUIWINDOW_IMPL
+	override LDLIBS += $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -DPROCESS_GUIWINDOW_IMPL
+	override LDFLAGS += $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -DPROCESS_GUIWINDOW_IMPL
 else ifeq ($(OS), FreeBSD)
 	override CXXFLAGS += -DPROCESS_GUIWINDOW_IMPL -I/usr/local/include
 	override CFLAGS += -DPROCESS_GUIWINDOW_IMPL -I/usr/local/include
@@ -95,8 +95,8 @@ else ifeq ($(OS), SunOS)
 else
 	override CXXFLAGS += -DPROCESS_GUIWINDOW_IMPL $(shell pkg-config --cflags sdl2) -static
 	override CFLAGS += -DPROCESS_GUIWINDOW_IMPL $(shell pkg-config --cflags sdl2) -static
-	override LDLIBS += -DPROCESS_GUIWINDOW_IMPL -lmingw32 -lshell32 -lole32 -luuid -lsetupapi -lImm32 -lversion -loleaut32 $(shell pkg-config --libs sdl2) -static
-	override LDFLAGS += -DPROCESS_GUIWINDOW_IMPL -lmingw32 -lshell32 -lole32 -luuid -lsetupapi -lImm32 -lversion -loleaut32 $(shell pkg-config --libs sdl2) -static
+	override LDLIBS += -DPROCESS_GUIWINDOW_IMPL -lmingw32 -lshell32 -lole32 -luuid -lsetupapi -lImm32 -lversion -loleaut32 $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -static
+	override LDFLAGS += -DPROCESS_GUIWINDOW_IMPL -lmingw32 -lshell32 -lole32 -luuid -lsetupapi -lImm32 -lversion -loleaut32 $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -static
 endif
 
 ifeq ($(OS), Darwin)
@@ -107,27 +107,27 @@ ifeq ($(OS), Darwin)
 else ifeq ($(OS), Linux)
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lpthread -lm -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lpthread -lm -lpng -lxcb -lXrandr -lXinerama -lXext
 else ifeq ($(OS), FreeBSD)  
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lprocstat -lutil -lc -lpthread -lkvm -lm -linotify -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lprocstat -lutil -lc -lpthread -lkvm -lm -linotify -lpng -lxcb -lXrandr -lXinerama -lXext
 else ifeq ($(OS), DragonFly)
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
 else ifeq ($(OS), NetBSD)
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
 else ifeq ($(OS), OpenBSD)
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
 else ifeq ($(OS), SunOS)
 	override CXXFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
 	override CFLAGS += $(shell pkg-config --cflags x11) $(shell pkg-config --cflags sdl2)
-	override LDFLAGS += $(shell pkg-config --libs x11) $(shell pkg-config --libs sdl2) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
+	override LDFLAGS += $(shell pkg-config --libs x11) $(shell echo `pkg-config --cflags --libs sdl2 --static | sed -e "s/-l\/usr\/local\/lib\/lib/-l/g" | sed -e "s/\.so//g"`) -lc -lpthread -lkvm -lm -lpng -lxcb -lXrandr -lXinerama -lXext
 else
 	override LDFLAGS += -lpng
 endif
