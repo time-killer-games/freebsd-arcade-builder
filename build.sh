@@ -71,7 +71,7 @@ build(){
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
-      -c freebsd -d "/usr/home/freebsd"\
+      -c freebsd -d "/home/freebsd"\
       -g operator -G video,wheel -m -s /bin/csh -k /usr/share/skel -w none
 
     # Add desktop environment
@@ -82,29 +82,29 @@ build(){
     echo "proc /proc procfs rw 0 0" >> ${release}/etc/fstab
     chroot ${release} mount -t procfs proc /proc
     chroot ${release} su -l freebsd -c "/usr/local/share/wine/pkg32.sh install -y wine mesa-dri"
-    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/usr/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
+    chroot ${release} su -l freebsd -c "setenv WINEPREFIX \"/home/freebsd/.wine\" && winetricks dsound && winetricks winxp"
     mkdir -p ${release}/usr/local/etc/rc.d
     mkdir -p ${release}/usr/local/etc/X11/xorg.conf.d
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
-    echo "RandomPlacement" > ${release}/usr/home/freebsd/.twmrc
-    echo "BorderWidth 0" >> ${release}/usr/home/freebsd/.twmrc
-    echo "NoTitle" >> ${release}/usr/home/freebsd/.twmrc
-    echo "/usr/home/freebsd/start.sh" > ${release}/usr/home/freebsd/.xinitrc
-    chmod 777 ${release}/usr/home/freebsd/.xinitrc
+    echo "/home/freebsd/start.sh" > ${release}/home/freebsd/.xinitrc
+    echo "/usr/bin/su -l root -c \"/sbin/shutdown -p now\"" >> ${release}/home/freebsd/.xinitrc
+    chmod 777 ${release}/home/freebsd/.xinitrc
+    echo "RandomPlacement" > ${release}/home/freebsd/.twmrc
+    echo "BorderWidth 0" >> ${release}/home/freebsd/.twmrc
+    echo "NoTitle" >> ${release}/home/freebsd/.twmrc
+    echo "/home/freebsd/start.sh" > ${release}/home/freebsd/.xinitrc
+    chmod 777 ${release}/home/freebsd/.xinitrc
     cp -f "${srcdir}/autologin.sh" ${release}/usr/local/etc/rc.d/autologin.sh
     chmod 777 ${release}/usr/local/etc/rc.d/autologin.sh
     echo "kern.corefile=/dev/null" > ${release}/etc/sysctl.conf
     echo "kern.coredump=0" >> ${release}/etc/sysctl.conf
-    echo "setenv WINEDLLOVERRIDES \"mscoree,mshtml=\"" >> ${release}/usr/home/freebsd/.login
-    echo "startx -- -nocursor" >> ${release}/usr/home/freebsd/.login
-    chmod 777 ${release}/usr/home/freebsd/.login
-    echo "twm -display :0 &" > ${release}/usr/home/freebsd/start.sh
-    echo "sleep 5" >> ${release}/usr/home/freebsd/start.sh
-    echo "wine /usr/home/freebsd/executable/run.exe" >> ${release}/usr/home/freebsd/start.sh
-    echo "/sbin/shutdown -p now" >> ${release}/usr/home/freebsd/start.sh
-    chmod 777 ${release}/usr/home/freebsd/start.sh
+    echo "setenv WINEDLLOVERRIDES \"mscoree,mshtml=\"" >> ${release}/home/freebsd/.login
+    echo "startx -- -nocursor" >> ${release}/home/freebsd/.login
+    chmod 777 ${release}/home/freebsd/.login
+    echo "twm -display :0 &" > ${release}/home/freebsd/start.sh
+    echo "sleep 5" >> ${release}/home/freebsd/start.sh
+    echo "wine /home/freebsd/executable/run.exe" >> ${release}/home/freebsd/start.sh
+    echo "/sbin/shutdown -p now" >> ${release}/home/freebsd/start.sh
+    chmod 777 ${release}/home/freebsd/start.sh
     echo "Section \"InputClass\"" > ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  Identifier \"evdev\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
     echo "  MatchDevicePath \"/dev/input/event*\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-uefi.conf
@@ -159,7 +159,7 @@ build(){
     echo "    Modes \"640x480\"" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "  EndSubSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
     echo "EndSection" >> ${release}/usr/local/etc/X11/xorg.conf.d/xorg-bios.conf
-    cp -fR "${srcdir}/wine/executable" ${release}/usr/home/freebsd/
+    cp -fR "${srcdir}/wine/executable" ${release}/home/freebsd/
 
     # remove all packages that are not permissive; cannot use "pkg remove" because it will also remove permissive packages we need
     chroot ${release} pkg remove -y winetricks && chroot ${release} pkg autoremove -y && chroot ${release} pkg clean -y
