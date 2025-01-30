@@ -71,7 +71,7 @@ build(){
 
    # Add live session user
    chroot ${release} pw useradd freebsd \
-      -c freebsd -d "/home/freebsd"\
+      -c freebsd -d "/home/freebsd" \
       -g operator -G video,wheel -m -s /bin/csh -k /usr/share/skel -w none
 
     # Add desktop environment
